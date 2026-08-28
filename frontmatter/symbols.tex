@@ -1,21 +1,66 @@
 \unnumberedchapter{فهرست علائم و اختصارات}
 
+نمادها به ترتیبی آمده‌اند که در متن ظاهر می‌شوند. توان‌ها بر حسب کیلووات، انرژی باتری بر حسب کیلووات‌ساعت و گام زمان برابر یک ساعت است.
+
 \begin{table}[H]
   \centering
-  \caption*{نمادهای اصلی مورد استفاده در گزارش}
-  \begin{tabular}{>{\centering\arraybackslash}p{0.20\textwidth} p{0.68\textwidth}}
+  \caption*{الف) کمیت‌های سامانه}
+  \begin{tabular}{>{\centering\arraybackslash}p{0.28\textwidth} p{0.60\textwidth}}
     \toprule
-    \textbf{نماد} & \textbf{تعریف} \\
+    \textbf{نماد} & \textbf{معنی} \\
+    \midrule
+    $t$ & شماره گام زمانی \\
+    $P_{\mathrm{L}}(t)$ & توان مصرفی بار \\
+    $P_{\mathrm{PV}}(t)$ & توان تولیدی فتوولتائیک \\
+    $P_{\mathrm{G}}(t)$ & توان خالص شبکه؛ مثبت برای خرید و منفی برای فروش \\
+    $P_{\mathrm{c}}(t)$ & توان شارژ باتری، نامنفی \\
+    $P_{\mathrm{d}}(t)$ & توان دشارژ باتری، نامنفی \\
+    $u(t)$ & فرمان علامت‌دار باتری؛ مثبت شارژ و منفی دشارژ \\
+    $u_{\mathrm{safe}}(t)$ & فرمان مدل داده‌محور پس از گیره و نگاشت ایمنی \\
+    $P_{\max}$ & سقف توان شارژ یا دشارژ باتری \\
+    $s(t)$ & وضعیت شارژ باتری، عددی بین صفر و یک \\
+    $s_{\min},\,s_{\max}$ & کف و سقف مجاز وضعیت شارژ \\
+    $E_{\max}$ & ظرفیت انرژی باتری \\
+    $\eta_{\mathrm{c}},\,\eta_{\mathrm{d}}$ & بازده شارژ و دشارژ \\
+    $\Delta t$ & طول گام زمان \\
+    $c_{\mathrm{b}}(t),\,c_{\mathrm{s}}(t)$ & قیمت خرید و فروش برق \\
+    $\kappa$ & ضریب هزینه عبور انرژی از باتری \\
+    $[z]_{+}$ & بخش مثبت $z$، برابر با $\max(0,z)$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption*{ب) کمیت‌های یادگیری و ارزیابی}
+  \begin{tabular}{>{\centering\arraybackslash}p{0.28\textwidth} p{0.60\textwidth}}
+    \toprule
+    \textbf{نماد} & \textbf{معنی} \\
+    \midrule
+    $\bm{x}(t)$ & بردار ورودی شبکه در ساعت $t$ \\
+    $\bm{y}^{\star}(t)$ & خروجی مرجع برنامه‌ریزی پویا \\
+    $z(t)$ & خروجی آزاد شبکه پیش از نگاشت فیزیکی \\
+    $r_{\mathrm{G}}(t)$ & باقیمانده توازن توان \\
+    $V_{t}(s)$ & هزینه آینده در برنامه‌ریزی پویا \\
+    $\mathcal{U}(s)$ & مجموعه فرمان‌های مجاز در \lr{SOC} فعلی \\
+    $\mathcal{L}_{u}$ & خطای آموزش فرمان باتری \\
+    $\mathrm{MSE}_{\mathrm{comp}}$ & \lr{MSE} میانگین‌گرفته‌شده روی چهار مؤلفه خروجی \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption*{پ) اختصارات}
+  \begin{tabular}{>{\centering\arraybackslash}p{0.28\textwidth} p{0.60\textwidth}}
+    \toprule
+    \textbf{اختصار} & \textbf{معنی} \\
     \midrule
     \lr{PINN} & شبکه عصبی فیزیک‌آگاه \\
-    \lr{MG} & ریزشبکه \\
-    $P_{\mathrm{PV}}$ & توان تولیدی سامانه خورشیدی \\
-    $P_{\mathrm{load}}$ & توان مصرفی بار \\
-    $P_{\mathrm{grid}}$ & توان مبادله‌شده با شبکه اصلی \\
-    $P_{\mathrm{ch}},P_{\mathrm{dis}}$ & توان شارژ و دشارژ باتری \\
-    $\mathrm{SOC}$ & وضعیت شارژ باتری \\
-    $\theta$ & پارامترهای قابل آموزش شبکه عصبی \\
-    $\mathcal{L}$ & تابع هزینه آموزش \\
+    \lr{SOC} & وضعیت شارژ باتری \\
+    \lr{DP} & برنامه‌ریزی پویا \\
+    \lr{MSE} & میانگین مربع خطا \\
+    \lr{PV} & فتوولتائیک \\
     \bottomrule
   \end{tabular}
 \end{table}
