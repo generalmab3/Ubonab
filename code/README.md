@@ -11,4 +11,4 @@ python3 -m venv .venv
 .venv/bin/python code/benchmark_runtime.py
 ```
 
-`simulate.py` جداول شاخص را در `code/data/metrics.json` و شکل‌ها را در `assets/` می‌نویسد.
+`simulate.py` مرجع برنامه‌ریزی پویا، دو شبکه، سیاست حریصانه، آزمایش حذفی نگاه‌به‌جلو، `code/data/metrics.json` و شکل‌ها را می‌نویسد.
