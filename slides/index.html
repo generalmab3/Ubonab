@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ارائه پایان‌نامه — یادگیری فیزیک‌آگاه با قیود سخت</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="deck">
+  <div id="bar"></div>
+
+  <section class="slide on title-slide">
+    <div class="brand">دانشگاه بناب · علوم کامپیوتر · شهریور ۱۴۰۵</div>
+    <p class="kicker">جلسه دفاع پروژه کارشناسی</p>
+    <h1>یادگیری فیزیک‌آگاه با قیود سخت برای مدیریت انرژی ریزشبکه متصل به شبکه</h1>
+    <p class="lead muted">مقیاس کار: یک خانه با بار، فتوولتائیک، باتری و یک اتصال شبکه — نه یک ریزشبکه میدانی</p>
+    <div class="row two" style="max-width:38rem;margin-top:1rem">
+      <div><div class="muted">نگارش</div><strong>محمد امیر بابازاد</strong></div>
+      <div><div class="muted">استاد راهنما</div><strong>دکتر بابک آذرنوید</strong></div>
+    </div>
+    <div class="notes">سلام کوتاه، عنوان را کامل بخوانید، و همان اول بگویید مقیاس خانه است تا انتظار داور تنظیم شود. شماره دانشجویی را لازم نیست بلند بگویید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">نقشه ارائه</p>
+    <h2>از مسئله تا نتیجه، در هفت ایستگاه</h2>
+    <div class="row two">
+      <div class="card"><h3>۱. مسئله</h3><p>خانه متصل به شبکه و قیود باتری</p></div>
+      <div class="card"><h3>۲. شکست شبکه آزاد</h3><p>خطای کم، فرمان ناممکن</p></div>
+      <div class="card"><h3>۳. روش</h3><p>فرمان علامت‌دار + لایه سخت</p></div>
+      <div class="card"><h3>۴. مرجع</h3><p>برنامه‌ریزی پویا، نه بهینه پیوسته</p></div>
+      <div class="card"><h3>۵. آزمایش</h3><p>۳۲۸۹ ساعت، پنج بذر، آزمون بازگشتی</p></div>
+      <div class="card"><h3>۶. نتیجه</h3><p>نقض صفر؛ هزینه نزدیک DP نه بهتر از آن</p></div>
+      <div class="card gold" style="grid-column:1/-1"><h3>۷. حد ادعا</h3><p>این PINN حل PDE نیست و به میدان تعمیم داده نمی‌شود.</p></div>
+    </div>
+    <div class="notes">این اسلاید فهرست است. بیش از ۳۰ ثانیه نمانید. بگویید آخر ارائه به «چه چیزی ادعا نمی‌کنیم» برمی‌گردیم.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">یک جمله</p>
+    <p class="take">اگر شبکه عصبی توان شبکه، شارژ، دشارژ و وضعیت شارژ را جداگانه بدهد، حتی با خطای کم ممکن است فرمانی بسازد که روی باتری قابل اجرا نباشد.</p>
+    <p class="lead">راه‌حل این گزارش: شبکه فقط فرمان علامت‌دار باتری را بیاموزد؛ بقیه کمیت‌ها از فیزیک مدل درآیند.</p>
+    <div class="notes">این پیام را دو بار در جلسه بگویید: اول و آخر. داور باید همین را به خاطر بسپارد نه جدول‌ها را.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">فصل ۱ · سامانه</p>
+    <h2>خانه متصل به شبکه، نه محله</h2>
+    <div class="row two">
+      <div class="card">
+        <h3>چهار جزء</h3>
+        <ul class="clean">
+          <li>بار محلی \(P_{\mathrm{L}}\)</li>
+          <li>فتوولتائیک \(P_{\mathrm{PV}}\)</li>
+          <li>باتری با وضعیت شارژ \(s\)</li>
+          <li>یک نقطه تبادل با شبکه \(P_{\mathrm{G}}\)</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <h3>تصمیم هر ساعت</h3>
+        <p>باتری شارژ شود یا دشارژ، و کمبود یا مازاد چگونه با شبکه بسته شود. ولتاژ، فرکانس و حفاظت خارج از قلمرو است.</p>
+      </div>
+    </div>
+    <div class="notes">کلمه ریزشبکه در عنوان هست؛ اینجا اصلاحش کنید. بگویید «واحد خانگی متصل به شبکه». منبع مفهومی: Oladejo 2019 فقط برای آشنایی با مسئله، نه نظریه بازی.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">قرارداد علامت</p>
+    <h2>خروجی تصمیم چهار تاست</h2>
+    <div class="eq">\(P_{\mathrm{G}}>0\) خرید از شبکه، \(\quad P_{\mathrm{G}}<0\) فروش، \(\quad P_{\mathrm{c}},P_{\mathrm{d}}\ge 0\)</div>
+    <div class="row three">
+      <div class="card"><h3>\(P_{\mathrm{G}}\)</h3><p>توان خالص شبکه</p></div>
+      <div class="card"><h3>\(P_{\mathrm{c}}, P_{\mathrm{d}}\)</h3><p>شارژ و دشارژ، هر دو نامنفی</p></div>
+      <div class="card"><h3>\(s(t+\Delta t)\)</h3><p>وضعیت شارژ گام بعد</p></div>
+    </div>
+    <div class="notes">روی تخته یا لیزر این چهار تا را بشمارید. بعد بگویید مدل آزاد هر چهار تا را جدا می‌دهد و مدل ما فقط یکی را.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">فصل ۲ · فیزیک</p>
+    <h2>توازن توان</h2>
+    <div class="eq">\[P_{\mathrm{G}}+P_{\mathrm{PV}}+P_{\mathrm{d}}=P_{\mathrm{L}}+P_{\mathrm{c}}\]</div>
+    <p>اگر برقرار نباشد، باقیمانده این است:</p>
+    <div class="eq">\[r_{\mathrm{G}}=P_{\mathrm{G}}+P_{\mathrm{PV}}+P_{\mathrm{d}}-P_{\mathrm{c}}-P_{\mathrm{L}}\]</div>
+    <p class="muted">صفر بودن \(r_{\mathrm{G}}\) یعنی تراز انرژی در همان ساعت برقرار است.</p>
+    <div class="notes">سمت چپ منبع، سمت راست مصرف. اگر داور پرسید سقف شبکه کجاست، بگویید در این مدل \(P_G\) آزاد است و توازن همیشه با شبکه بسته می‌شود؛ این محدودیت کار است نه حسن آن.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">باتری</p>
+    <h2>مدل انرژی گسسته، نه الکتروشیمی</h2>
+    <div class="eq">\[s(t+\Delta t)=s(t)+\frac{\eta_{\mathrm{c}}P_{\mathrm{c}}\Delta t}{E_{\max}}-\frac{P_{\mathrm{d}}\Delta t}{\eta_{\mathrm{d}}E_{\max}}\]</div>
+    <div class="row two">
+      <div class="card">
+        <h3>حد ایمنی</h3>
+        <div class="eq">\[0.20\le s\le 0.90,\quad 0\le P_{\mathrm{c}},P_{\mathrm{d}}\le 1\,\mathrm{kW}\]</div>
+      </div>
+      <div class="card">
+        <h3>قید انحصار</h3>
+        <div class="eq">\[P_{\mathrm{c}}P_{\mathrm{d}}=0\]</div>
+        <p>باتری تک‌مبدله هم‌زمان دو طرفه کار نمی‌کند.</p>
+      </div>
+    </div>
+    <p class="muted">\(E_{\max}=2\,\mathrm{kWh}\)، بازده هر طرف \(0.95\)، گام یک ساعت. دما و پیری نیست.</p>
+    <div class="notes">SOC را فارسی بگویید: نسبت انرژی ذخیره‌شده به ظرفیت نامی. اعداد را از حفظ بگویید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">هزینه</p>
+    <h2>خرید، فروش، و جریمه عبور از باتری</h2>
+    <div class="eq">\[g_t=c_{\mathrm{b}}[P_{\mathrm{G}}]_{+}\Delta t-c_{\mathrm{s}}[-P_{\mathrm{G}}]_{+}\Delta t+\kappa(P_{\mathrm{c}}+P_{\mathrm{d}})\Delta t\]</div>
+    <div class="row two">
+      <div class="card"><h3>تعرفه فرضی</h3><p>کم‌باری \(0.16\)، عادی \(0.22\)، اوج \(0.34\)، آخر هفته \(0.20\)؛ فروش \(0.06\). قبض واقعی نیست.</p></div>
+      <div class="card"><h3>\(\kappa=0.008\)</h3><p>نماینده ساده استهلاک عبوری است، نه مدل پیری.</p></div>
+    </div>
+    <div class="notes">اگر پرسیدند واحد پولی چیست، بگویید مفروض و فقط برای مقایسه نسبی. منبع تعرفه مقاله نیست؛ پیوست الف.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">چرا یادگیری؟</p>
+    <h2>DP دقیق است، ولی برای هر افق دوباره حل می‌شود</h2>
+    <div class="row two">
+      <div class="card"><h3>برنامه‌ریزی پویا</h3><p>مرجع مقید و تفسیرپذیر. هزینه به شبکه حالت بستگی دارد. در این کار \(71\) نقطه SOC و \(41\) فرمان.</p></div>
+      <div class="card"><h3>شبکه عصبی</h3><p>پس از آموزش، یک گام حدود \(21.5\) میکروثانیه. اما خروجی آزاد لزوماً قابل اجرا نیست.</p></div>
+    </div>
+    <p>هدف اقتصادی این پروژه جایگزینی قطعی حل‌کننده نیست؛ تقریب سریع یک برنامه مرجع است.</p>
+    <div class="notes">عدد زمان DP حدود \(0.54\) ثانیه برای ۳۲۸۹ ساعت است. نگویید «شبکه از بهینه‌سازی بهتر است».</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">شکست مدل آزاد</p>
+    <h2>چهار جور ناممکنی</h2>
+    <div class="row two">
+      <div class="card"><h3>توان منفی</h3><p>\(P_{\mathrm{c}}<0\) یا \(P_{\mathrm{d}}<0\)</p></div>
+      <div class="card"><h3>هم‌زمانی</h3><p>شارژ و دشارژ در یک ساعت هر دو مثبت</p></div>
+      <div class="card"><h3>SOC خارج بازه</h3><p>کمتر از \(0.20\) یا بیشتر از \(0.90\)</p></div>
+      <div class="card"><h3>باقیمانده توازن</h3><p>\(r_{\mathrm{G}}\neq 0\)</p></div>
+    </div>
+    <p class="take" style="font-size:1.25rem">خطای تقریب کم، به‌تنهایی گواه امکان‌پذیری نیست.</p>
+    <div class="notes">این اسلاید را به نتایج وصل کنید: مدل آزاد همین چهار تا را در آزمون نشان می‌دهد.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">جریمه نرم در برابر قید سخت</p>
+    <h2>فیزیک را کجا بگذاریم؟</h2>
+    <div class="row two">
+      <div class="card"><h3>جریمه نرم</h3><p>نقض را با یک ضریب به زیان اضافه می‌کنند. خطا کم می‌شود، ولی حذف کامل نقض تضمین ندارد.</p></div>
+      <div class="card teal"><h3>قید سخت</h3><p>قید در خود خروجی است. در این کار لایه بدون وزن آموزش‌پذیر فرمان را به چهار کمیت مجاز می‌نگارد.</p></div>
+    </div>
+    <p class="muted">جریمه نرم روی همین معماری در این گزارش آموزش داده نشد؛ فقط انگیزه روش است.</p>
+    <div class="notes">اگر داور گفت پس با PINN نرم مقایسه کنید، صادقانه بگویید مقایسه تجربی نیست و محدودیت کار است.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">سؤال محتمل داور</p>
+    <h2>این کار PINN است؟</h2>
+    <div class="row two">
+      <div class="card"><h3>PINN رایج</h3><ul class="clean"><li>معادله دیفرانسیل</li><li>باقیمانده در تابع زیان</li><li>قید معمولاً نرم</li></ul></div>
+      <div class="card navy"><h3>این گزارش</h3><ul class="clean"><li>قوانین جبری ساعتی</li><li>فیزیک در لایه خروجی</li><li>قید سخت برای مدل باتری</li><li>برچسب از DP</li></ul></div>
+    </div>
+    <p>از خانواده یادگیری فیزیک‌آگاه است، اما PINN حل PDE نیست. نام دقیق‌تر: <strong>شبکه فیزیک‌تعبیه‌شده با قید سخت</strong>.</p>
+    <div class="notes">جمله را از حفظ بگویید. منابع: Raissi 2019، Karniadakis 2021 برای ایده؛ Lu 2021 و Chen 2024 برای قید سخت.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">فصل ۳ · مدل پیشنهادی</p>
+    <h2>شبکه یک عدد می‌دهد؛ فیزیک بقیه را می‌سازد</h2>
+    <div class="eq">\[u(t)=P_{\max}\tanh\bigl(z(t)\bigr)\]</div>
+    <p>علامت \(u\) جهت است: مثبت شارژ، منفی دشارژ. قدر مطلق شدت توان است.</p>
+    <p class="muted">بازه تانژانت هیپربولیک در \(\pm 1\) باز است؛ فرمان دقیقاً به \(\pm P_{\max}\) نمی‌رسد و فقط نزدیک می‌شود.</p>
+    <div class="notes">z خروجی آزاد شبکه است. tanh را روی تخته یک اسکیس بکشید اگر وقت بود.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">لایه سخت</p>
+    <h2>سقف وابسته به SOC، سپس انحصار</h2>
+    <div class="eq">\[\bar P_{\mathrm{c}}(s)=\max\Bigl(0,\min\bigl(P_{\max},\tfrac{(s_{\max}-s)E_{\max}}{\eta_{\mathrm{c}}\Delta t}\bigr)\Bigr)\]</div>
+    <div class="eq">\[\bar P_{\mathrm{d}}(s)=\max\Bigl(0,\min\bigl(P_{\max},\tfrac{(s-s_{\min})E_{\max}\eta_{\mathrm{d}}}{\Delta t}\bigr)\Bigr)\]</div>
+    <div class="eq">\[P_{\mathrm{c}}=\min([u]_{+},\bar P_{\mathrm{c}}),\qquad P_{\mathrm{d}}=\min([-u]_{+},\bar P_{\mathrm{d}})\]</div>
+    <div class="notes">اول ظرفیت باقی‌مانده جعبه SOC، بعد بریدن فرمان. از روی همین دو خط بگویید چرا هم‌زمانی رخ نمی‌دهد: یکی از [u]+ و [-u]+ صفر است.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">پس از فرمان مجاز</p>
+    <h2>SOC بعد و توان شبکه</h2>
+    <div class="eq">\[s(t+\Delta t)=s(t)+\frac{\eta_{\mathrm{c}}P_{\mathrm{c}}\Delta t}{E_{\max}}-\frac{P_{\mathrm{d}}\Delta t}{\eta_{\mathrm{d}}E_{\max}}\]</div>
+    <div class="eq">\[P_{\mathrm{G}}=P_{\mathrm{L}}+P_{\mathrm{c}}-P_{\mathrm{PV}}-P_{\mathrm{d}}\]</div>
+    <p>توازن با تعریف \(P_{\mathrm{G}}\) برقرار می‌شود. در این مطالعه سقف واردات یا صادرات گذاشته نشده است.</p>
+    <div class="notes">این همان جایی است که فیزیک «آسان» می‌شود. پنهان نکنید. بگویید اگر سقف اتصال باشد لایه باید عوض شود.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">آموزش مدل پیشنهادی</p>
+    <h2>زیان فقط روی فرمان است</h2>
+    <div class="eq">\[\mathcal L_u=\frac1N\sum_{i=1}^N\left(\tanh(z_i)-\frac{u_i^\star}{P_{\max}}\right)^2\]</div>
+    <p>\(u^\star\) فرمان مرجع برنامه‌ریزی پویاست. چهار خروجی فیزیکی بعد از لایه ساخته می‌شوند و در این زیان نیستند.</p>
+    <div class="notes">تفاوت با مدل آزاد: آن یکی MSE چهار مؤلفه استانداردشده را کمینه می‌کند.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">مرجع</p>
+    <h2>برنامه‌ریزی پویا روی شبکه گسسته</h2>
+    <div class="eq">\[V_t(s)=\min_{u\in\mathcal U(s)}\bigl\{g_t(s,u)+V_{t+1}\bigl(f(s,u)\bigr)\bigr\}\]</div>
+    <ul class="clean">
+      <li>حالت: SOC با گام \(0.01\) از \(0.20\) تا \(0.90\) — ۷۱ نقطه</li>
+      <li>فرمان: ۴۱ مقدار روی \([-1,1]\) کیلووات</li>
+      <li>شرط نهایی \(V_T(s)=0\)؛ ارزش اسقاط باتری نیست</li>
+    </ul>
+    <p>پس مرجع، تقریب عددی افق کامل است نه بهینه پیوسته دقیق.</p>
+    <div class="notes">اگر گفتند «پس ۲٫۸٪ از چه چیزی؟» جواب: از همین مرجع گسسته، نه از بهینگی پیوسته ناشناخته.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">کران نزدیک‌بین</p>
+    <h2>سیاست حریصانه آینده را نمی‌بیند</h2>
+    <p>در هر ساعت همان شبکه ۴۱ فرمانی را برمی‌گزیند که فقط \(g_t\) را کمینه کند.</p>
+    <div class="row two">
+      <div class="card"><h3>رفتار</h3><p>شارژ اکنون فقط هزینه است. انرژی آغازین تخلیه می‌شود و سیاست نزدیک بدون‌باتری می‌ماند.</p></div>
+      <div class="card gold"><h3>نتیجه آزمایش</h3><p>هزینه \(45.099\) در برابر بدون باتری \(45.233\). ارزش باتری در این مسئله بین‌ساعتی است.</p></div>
+    </div>
+    <div class="notes">این اسلاید پاسخ می‌دهد چرا MLP لازم است چیزی شبیه DP یاد بگیرد نه قاعده همان‌ساعت.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">دو شبکه</p>
+    <h2>همه‌چیز یکسان، جز خروجی</h2>
+    <table>
+      <tr><th></th><th>داده‌محور آزاد</th><th>فیزیک‌تعبیه‌شده</th></tr>
+      <tr><td>لایه پنهان</td><td>۳۲ و ۳۲، تانژانت</td><td>همان</td></tr>
+      <tr><td>خروجی</td><td>چهار کمیت آزاد</td><td>یک \(z\)، سپس لایه سخت</td></tr>
+      <tr><td>زیان</td><td>MSE چهارتایی استاندارد</td><td>خطای فرمان</td></tr>
+      <tr><td>آزمون نقض</td><td>خروجی خام بازگشتی</td><td>خروجی پس از لایه</td></tr>
+      <tr><td>هزینه</td><td>فقط پس از نگاشت ایمنی</td><td>همان لایه، داخل مدل</td></tr>
+    </table>
+    <div class="notes">تأکید کنید هزینه مدل آزاد روی خروجی خام حساب نشده تا نقض پاداش نگیرد.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">ورودی</p>
+    <h2>دوازده ویژگی، با نگاه‌به‌جلوی بی‌خطا</h2>
+    <div class="eq" style="font-size:1.05rem">\[\mathbf x(t)=\bigl(\sin(2\pi h/24),\cos(2\pi h/24),d,P_{\mathrm{L}},P_{\mathrm{PV}},c_{\mathrm{b}},c_{\mathrm{s}},s,P_{\mathrm{L}}^{t+1},P_{\mathrm{PV}}^{t+1},P_{\mathrm{L}}^{t+3},P_{\mathrm{PV}}^{t+3}\bigr)\]</div>
+    <p>مقادیر \(t+1\) و \(t+3\) همان مقدار واقعی سری‌اند. این فرض میدان نیست؛ برای مقایسه آفلاین با DP است.</p>
+    <p>بعداً همین مدل بدون این چهار ورودی دوباره آموزش داده می‌شود.</p>
+    <div class="notes">نشت مرزی انتهای هر افراز را خودتان بگویید قبل از داور: چند نمونه پایانی می‌تواند ساعت بعد را ببیند، ولی برچسب آزمون در آموزش نیست.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">پروتکل آموزش</p>
+    <h2>افراز زمانی؛ آزمون در انتخاب مدل نیست</h2>
+    <div class="row three">
+      <div class="card"><h3>آموزش</h3><p class="big" style="font-size:2rem">۱۹۷۳</p><p>ساعت · ۶۰٪ اول</p></div>
+      <div class="card"><h3>اعتبارسنجی</h3><p class="big" style="font-size:2rem">۶۵۷</p><p>۲۰٪ بعدی</p></div>
+      <div class="card"><h3>آزمون</h3><p class="big" style="font-size:2rem">۶۵۹</p><p>۲۰٪ پایانی</p></div>
+    </div>
+    <ul class="clean">
+      <li>آدام، دسته ۶۴، حداکثر ۴۵۰ دوره (عبور کامل از آموزش)</li>
+      <li>توقف زودهنگام: ۵۵ دوره بدون بهبود اعتبارسنجی</li>
+      <li>پنج بذر ۷، ۱۱، ۱۹، ۲۳، ۲۹ — فقط مقداردهی و ترتیب دسته</li>
+      <li>آزمون بازگشتی: SOC ورودی از خود مدل می‌آید</li>
+    </ul>
+    <div class="notes">دوره و دسته را اگر پرسیدند همان تعریف اسلاید را بگویید. انحراف معیار جدول پراکندگی آموزش است نه تغییر داده.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">شاخص‌ها</p>
+    <h2>چه چیزی را گزارش می‌کنیم؟</h2>
+    <div class="row two">
+      <div class="card"><h3>دقت</h3><p>MAE برای \(P_{\mathrm{G}}\)، فرمان \(u\) و \(s\). MSE چهارتایی به‌خاطر ناهم‌واحدی در جدول اصلی نیست.</p></div>
+      <div class="card"><h3>امکان‌پذیری</h3><p>\(|r_{\mathrm{G}}|\)، نقض SOC، توان منفی، هم‌زمانی</p></div>
+      <div class="card"><h3>هزینه</h3><p>جمع \(g_t\) روی ۶۵۹ ساعت آزمون، فقط برنامه‌های قابل اجرا</p></div>
+      <div class="card"><h3>کران‌ها</h3><p>DP پایین تفسیری؛ بدون باتری و حریصانه بالا</p></div>
+    </div>
+    <div class="notes">جدول دقت را «نزدیکی به DP» بخوانید نه کیفیت کنترل در میدان.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">فصل ۴ · داده</p>
+    <h2>مطالعه موردی ترکیبی، مقیاس خانه</h2>
+    <table>
+      <tr><th>مؤلفه</th><th>چه شد</th><th>چه نیست</th></tr>
+      <tr><td>بازه</td><td>۱۱ ژانویه ۱۷:۰۰ تا ۲۷ مه ۱۷:۰۰ ۲۰۱۶ · ۳۲۸۹ ساعت</td><td>بازه کامل مجموعه اصلی</td></tr>
+      <tr><td>بار</td><td>مدل مسکونی روی تقویم Candanedo + ۰٫۲۰ کیلووات</td><td>میانگین UCI در این اجرا</td></tr>
+      <tr><td>PV</td><td>پوش ارتفاع خورشید در Stambruges · ۱ کیلووات · ۰٫۸۲</td><td>تابش ساعتی NASA در این اجرا</td></tr>
+      <tr><td>تعرفه و باتری</td><td>فرض مهندسی بایگانی‌شده</td><td>قبض یا مدل پیری</td></tr>
+    </table>
+    <p>اگر UCI و NASA POWER در دسترس باشند اسکریپت از آن‌ها می‌سازد؛ در این اجرا میزبان‌ها بسته بودند.</p>
+    <div class="notes">این اسلاید اعتبار علمی شماست. دروغ نگویید که داده میدانی دارید. تقویم از Candanedo است نه سری واقعی خانه.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">نتیجه · دقت</p>
+    <h2>نزدیکی به برنامه مرجع روی آزمون</h2>
+    <table>
+      <tr><th>مدل</th><th>MAE \(P_{\mathrm{G}}\)</th><th>MAE \(u\)</th><th>MAE \(s\)</th></tr>
+      <tr><td>مرجع پویا</td><td>۰</td><td>۰</td><td>۰</td></tr>
+      <tr><td>بدون باتری</td><td>۰٫۰۹۹</td><td>۰٫۰۹۹</td><td>۰٫۲۶۳</td></tr>
+      <tr><td>حریصانه</td><td>۰٫۱۰۱</td><td>۰٫۱۰۱</td><td>۰٫۳۹۵</td></tr>
+      <tr><td>داده‌محور خام</td><td>۰٫۰۷۹ ± ۰٫۰۰۳</td><td>۰٫۰۷۸ ± ۰٫۰۰۴</td><td>۰٫۰۹۳ ± ۰٫۰۰۹</td></tr>
+      <tr class="hl"><td>فیزیک‌تعبیه‌شده</td><td>۰٫۰۷۷ ± ۰٫۰۰۸</td><td>۰٫۰۷۷ ± ۰٫۰۰۸</td><td>۰٫۰۹۷ ± ۰٫۰۱۷</td></tr>
+    </table>
+    <p class="muted">MSE تجمیعی داده‌محور \(0.0133\pm 0.0008\) و فیزیک‌تعبیه‌شده \(0.0145\pm 0.0016\)؛ مدل آزاد کمی نزدیک‌تر است.</p>
+    <div class="notes">نگویید مدل ما دقیق‌تر است. بگویید دقت شبیه است و داستان در قیود است. برابری MAE شبکه و u در مدل مقید از \(P_G-P_G^\star=-u^\star\) می‌آید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">نتیجه · قیود</p>
+    <h2>اینجا اختلاف اصلی است</h2>
+    <table>
+      <tr><th>مدل</th><th>\(|r_G|\)</th><th>نقض SOC %</th><th>\(P_c<0\)</th><th>\(P_d<0\)</th><th>هم‌زمانی</th></tr>
+      <tr><td>مرجع / بدون باتری</td><td>≈ ۰</td><td>۰</td><td>۰</td><td>۰</td><td>۰</td></tr>
+      <tr><td>داده‌محور خام</td><td>۰٫۰۱۶۶ ± ۰٫۰۰۲۱</td><td>۱۱٫۴ ± ۲٫۸</td><td>۴۱٫۹ ± ۷٫۰</td><td>۳۱٫۰ ± ۹٫۰</td><td>۳۵٫۴ ± ۳٫۷</td></tr>
+      <tr class="hl"><td>فیزیک‌تعبیه‌شده</td><td>≈ ۰</td><td>۰</td><td>۰</td><td>۰</td><td>۰</td></tr>
+    </table>
+    <p class="take" style="font-size:1.2rem">صفر بودن نقض کشف آماری نیست؛ از خود لایه می‌آید.</p>
+    <div class="notes">اعداد را کامل نخوانید. سه تا را بگویید: ۱۱٫۴ درصد SOC، ۳۵٫۴ درصد هم‌زمانی، مدل ما صفر.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">شکل</p>
+    <h2>باقیمانده توازن در هفته نخست آزمون</h2>
+    <img class="fig" src="../assets/fig-power-residual.png" alt="باقیمانده توان">
+    <p class="muted">DD خروجی خام داده‌محور، PE فیزیک‌تعبیه‌شده. محورها همان نمادهای متن‌اند.</p>
+    <div class="notes">انگشت روی خط بنفش نزدیک صفر. بگویید این روزها از مجموعه آزمون است.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">شکل</p>
+    <h2>نخستین روز آزمون</h2>
+    <img class="fig" src="../assets/fig-first-test-day.png" alt="روز نخست آزمون">
+    <p class="muted">بالا بار و فتوولتائیک؛ پایین SOC مرجع، داده‌محور ترمیم‌شده و فیزیک‌تعبیه‌شده.</p>
+    <div class="notes">این یک روز نمونه است نه میانگین. برای شهود مسیر شارژ است.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">نتیجه · هزینه</p>
+    <h2>افق آزمون ۶۵۹ ساعته</h2>
+    <table>
+      <tr><th>مدل</th><th>هزینه کل</th><th>فاصله از DP</th></tr>
+      <tr><td>مرجع پویا</td><td>۴۱٫۲۵۲</td><td>۰</td></tr>
+      <tr><td>بدون باتری</td><td>۴۵٫۲۳۳</td><td>۹٫۷٪</td></tr>
+      <tr><td>حریصانه</td><td>۴۵٫۰۹۹</td><td>۹٫۳٪</td></tr>
+      <tr><td>داده‌محور + نگاشت ایمنی</td><td>۴۲٫۲۳۴ ± ۰٫۳۱۸</td><td>۲٫۴ ± ۰٫۸٪</td></tr>
+      <tr class="hl"><td>فیزیک‌تعبیه‌شده</td><td>۴۲٫۴۱۸ ± ۰٫۵۱۱</td><td>۲٫۸ ± ۱٫۲٪</td></tr>
+    </table>
+    <p>فیزیک‌تعبیه‌شده حدود ۶٫۲٪ از بدون‌باتری ارزان‌تر است. اختلاف با مدل ترمیم‌شده با پنج بذر قاطع نیست.</p>
+    <div class="notes">جمله ممنوع: «مدل ما از DP بهتر است». جمله درست: «قابل اجرا است و از بدون‌باتری ارزان‌تر؛ به DP نمی‌رسد».</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">شکل</p>
+    <h2>میانگین هزینه روزانه برنامه‌های قابل اجرا</h2>
+    <img class="fig" src="../assets/fig-daily-cost.png" alt="هزینه روزانه">
+    <p class="muted">NB بدون باتری، DD داده‌محور ترمیم‌شده، PE فیزیک‌تعبیه‌شده.</p>
+    <div class="notes">ستون‌ها نزدیک‌اند؛ همان همپوشانی انحراف معیار را یادآوری کنید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">آزمایش حذفی</p>
+    <h2>بدون \(t+1\) و \(t+3\)</h2>
+    <table>
+      <tr><th>ورودی</th><th>هزینه</th><th>فاصله از DP</th><th>MAE \(u\)</th></tr>
+      <tr><td>با نگاه‌به‌جلو</td><td>۴۲٫۴۱۸ ± ۰٫۵۱۱</td><td>۲٫۸ ± ۱٫۲٪</td><td>۰٫۰۷۷ ± ۰٫۰۰۸</td></tr>
+      <tr class="hl"><td>بدون نگاه‌به‌جلو</td><td>۴۱٫۸۷۲ ± ۰٫۲۴۴</td><td>۱٫۵ ± ۰٫۶٪</td><td>۰٫۰۷۷ ± ۰٫۰۰۶</td></tr>
+    </table>
+    <p>در این سری، حذف نگاه‌به‌جلو هزینه را بدتر نکرد. پس فاصله ۲٫۸٪ را نمی‌توان به آن ورودی‌ها نسبت داد. این به میدان بدون پیش‌بینی تعمیم داده نمی‌شود.</p>
+    <div class="notes">نتیجه خلاف انتظار است؛ همان را بگویید. حدس معقول: برچسب DP خودش آینده را دارد و چهار ورودی اضافه به MLP کوچک کمک نکرد.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">زمان اجرا</p>
+    <h2>یک‌بار DP در برابر یک گام شبکه</h2>
+    <div class="row two">
+      <div class="card"><h3>DP افق کامل</h3><p class="big" style="font-size:2.4rem">۰٫۵۴۰ s</p><p>۳۲۸۹ گام، همین محیط</p></div>
+      <div class="card teal"><h3>یک گام کنترل‌کننده</h3><p class="big" style="font-size:2.4rem">۲۱٫۵ µs</p><p>\(21.468\pm 0.402\) بعد از گرم‌سازی</p></div>
+    </div>
+    <p class="muted">پایتون 3.11.2، نام‌پای 2.4.6، پردازنده مدل‌نامشخص. روی سخت‌افزار دیگر باید دوباره اندازه گرفت.</p>
+    <div class="notes">ادعای زمان واقعی صنعتی نکنید. فقط بگویید پس از آموزش ارزان است.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">چه چیزی را می‌توان گفت</p>
+    <h2>نتیجه قابل دفاع</h2>
+    <ul class="clean">
+      <li>پارامتردهی فیزیکی می‌تواند تقریب عصبی را به برنامه قابل اجرا تبدیل کند.</li>
+      <li>روی این سری، نقض‌های تعریف‌شده در محاسبه شناور صفر است.</li>
+      <li>هزینه از بدون‌باتری بهتر و از DP کمی بدتر است.</li>
+      <li>پس‌پردازش ایمنی روی مدل آزاد هزینه‌ای مشابه می‌دهد؛ برتری قطعی معماری نیست.</li>
+    </ul>
+    <div class="notes">این چهار خط را آرام بخوانید. جلسه را روی خط اول ببندید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">چه چیزی را نمی‌گوییم</p>
+    <h2>حد ادعا</h2>
+    <div class="row two">
+      <div class="card rose" style="background:#f7ecec"><h3>نه</h3><p>برتری صنعتی، داده میدانی، PINN حل معادله، جایگزینی DP، یا عملکرد با خطای پیش‌بینی</p></div>
+      <div class="card"><h3>چرا</h3><p>داده ترکیبی خانه است، آینده‌نگری کامل است، شبکه نامحدود است، باتری بدون دما و پیری است، جریمه نرم آموزش نشده است.</p></div>
+    </div>
+    <div class="notes">داور سخت‌گیر دقیقاً همین‌ها را می‌پرسد. پیش‌دستی کنید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">محدودیت و ادامه</p>
+    <h2>خارج از همین آزمایش</h2>
+    <ul class="clean">
+      <li>سقف \(P_{\mathrm{G}}\) و سازگار کردن لایه سخت با آن</li>
+      <li>خطای پیش‌بینی به‌جای نگاه‌به‌جلوی بی‌خطا</li>
+      <li>بار و فتوولتائیک هم‌مکان</li>
+      <li>جاروب \(P_{\max}\)، \(E_{\max}\)، بازده و فاصله تعرفه</li>
+      <li>مقایسه با کنترل پیش‌بین یا برنامه‌ریزی آمیخته</li>
+    </ul>
+    <p class="muted">این‌ها کار انجام‌نشده این گزارش‌اند، نه نتیجه پنهان.</p>
+    <div class="notes">لیست را کوتاه بگویید. نگویید «حتماً در مقاله بعدی».</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">جمع‌بندی</p>
+    <h2>داستان در سه قدم</h2>
+    <div class="row three">
+      <div class="card"><h3>۱</h3><p>شبکه آزاد می‌تواند نزدیک برچسب باشد و ناممکن فرمان بدهد.</p></div>
+      <div class="card teal"><h3>۲</h3><p>یک فرمان علامت‌دار به‌علاوه لایه باتری، قیود مدل‌شده را ساختاری برقرار می‌کند.</p></div>
+      <div class="card navy"><h3>۳</h3><p>روی این خانه ترکیبی، هزینه نزدیک DP است نه بهتر از آن.</p></div>
+    </div>
+    <div class="notes">۳۰ ثانیه سکوت بعد از اسلاید، بعد تشکر.</div>
+  </section>
+
+  <section class="slide title-slide">
+    <p class="kicker">پایان ارائه</p>
+    <h1>پرسش‌ها</h1>
+    <p class="lead">محمد امیر بابازاد · دانشگاه بناب · شهریور ۱۴۰۵</p>
+    <p class="muted">استاد راهنما: دکتر بابک آذرنوید</p>
+    <div class="notes">بعد از پرسش، اگر خواستند اسلاید پشتیبان اعداد یا PINN را بیاورید. کلید End برای آخر، Home برای اول.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">پشتیبان</p>
+    <h2>برگه تقلب اعداد</h2>
+    <table>
+      <tr><th>کمیت</th><th>مقدار</th></tr>
+      <tr><td>ساعت / افراز</td><td>۳۲۸۹ → ۱۹۷۳ / ۶۵۷ / ۶۵۹</td></tr>
+      <tr><td>DP / بدون باتری / حریصانه</td><td>۴۱٫۲۵۲ / ۴۵٫۲۳۳ / ۴۵٫۰۹۹</td></tr>
+      <tr><td>PE / DD ترمیم</td><td>۴۲٫۴۱۸ ± ۰٫۵۱۱ / ۴۲٫۲۳۴ ± ۰٫۳۱۸</td></tr>
+      <tr><td>PE بدون نگاه‌به‌جلو</td><td>۴۱٫۸۷۲ ± ۰٫۲۴۴</td></tr>
+      <tr><td>نقض خام SOC / هم‌زمانی</td><td>۱۱٫۴٪ / ۳۵٫۴٪</td></tr>
+      <tr><td>زمان DP / یک گام</td><td>۰٫۵۴۰ s / ۲۱٫۵ µs</td></tr>
+    </table>
+    <div class="notes">این اسلاید را در ارائه اصلی نشان ندهید مگر بپرسند.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">پشتیبان · پرسش‌های محتمل</p>
+    <h2>اگر پرسیدند</h2>
+    <ul class="clean">
+      <li><strong>سقف شبکه؟</strong> نیست؛ لایه باید با گیره \(P_G\) گسترش یابد.</li>
+      <li><strong>تفاوت با پس‌پردازش؟</strong> در مدل ما گرادیان از فضای مجاز می‌گذرد و در آزمون تعمیر جدا نیست.</li>
+      <li><strong>۲٫۸٪ نسبت به چه؟</strong> مرجع گسسته DP همین گزارش.</li>
+      <li><strong>داده واقعی؟</strong> تقویم Candanedo؛ بار و PV در این اجرا مصنوعی.</li>
+      <li><strong>چرا حریصانه بد است؟</strong> آینده تعرفه را نمی‌بیند؛ انرژی اولیه را خالی می‌کند.</li>
+    </ul>
+    <div class="notes">پاسخ‌ها را کوتاه نگه دارید. اگر ندانستید به محدودیت فصل ۴ برگردید.</div>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">پشتیبان · منابع اصلی</p>
+    <h2>اگر منبع خواستند</h2>
+    <ul class="clean">
+      <li>Raissi و همکاران ۲۰۱۹ — PINN با باقیمانده PDE</li>
+      <li>Karniadakis و همکاران ۲۰۲۱ — فیزیک از راه داده، زیان یا معماری</li>
+      <li>Lu ۲۰۲۱ و Chen ۲۰۲۴ — قید سخت در خروجی</li>
+      <li>Bertsekas — برنامه‌ریزی پویا</li>
+      <li>Candanedo ۲۰۱۷ — تقویم و محل خانه</li>
+      <li>El-Hendawi ۲۰۱۸ و Parisio ۲۰۱۴ — بهره‌برداری ریزشبکه با قیود</li>
+    </ul>
+    <p class="muted">فهرست کامل در فایل <span class="num">references.bib</span> گزارش است.</p>
+    <div class="notes">Oladejo را فقط برای تعریف مسئله بگویید؛ نظریه بازی‌اش پیاده نشده.</div>
+  </section>
+
+  <div class="foot">
+    <span>یادگیری فیزیک‌آگاه با قیود سخت · بابازاد · بناب</span>
+    <span id="count">۱ / ۱</span>
+  </div>
+  <div class="help" id="help">
+    <h3>کلیدها</h3>
+    <p>جهت یا فاصله: بعد و قبل · Home / End · F تمام‌صفحه · N یادداشت گوینده · ? همین راهنما · P چاپ</p>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
