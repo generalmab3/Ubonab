@@ -102,6 +102,7 @@ def rollout_raw_dd(model, x_mean, x_std, y_mean, y_std, case, s0, start, stop):
     p_c = np.zeros(n)
     p_d = np.zeros(n)
     s = np.zeros(n)
+    s_next_path = np.zeros(n)
     s_now = s0
     for i, t in enumerate(range(start, stop)):
         feat = make_features(case, np.zeros(case["p_l"].size))[t]
@@ -110,8 +111,9 @@ def rollout_raw_dd(model, x_mean, x_std, y_mean, y_std, case, s0, start, stop):
         y = model.predict(z)[0] * y_std + y_mean
         p_g[i], p_c[i], p_d[i], s_next = y
         s[i] = s_now
+        s_next_path[i] = float(s_next)
         s_now = float(s_next)
-    return p_g, p_c, p_d, s
+    return p_g, p_c, p_d, s, s_next_path
 
 
 def rollout_hard(command_fn, case, s0, start, stop):
@@ -269,8 +271,8 @@ def main():
         print(f"seed {seed}: training physics-embedded...")
         pe_net, _ = train_mlp(x_tr, u_tr, x_va, u_va, HIDDEN, 1, seed + 17, LR, BATCH, EPOCHS, PATIENCE, tanh_output=True)
 
-        pg, pc, pd, s_raw = rollout_raw_dd(dd, x_mean, x_std, y_mean, y_std, case, ref["s"][start], start, n)
-        last_dd_raw = {"p_g": pg, "p_c": pc, "p_d": pd, "s": s_raw}
+        pg, pc, pd, s_raw, sn_raw = rollout_raw_dd(dd, x_mean, x_std, y_mean, y_std, case, ref["s"][start], start, n)
+        last_dd_raw = {"p_g": pg, "p_c": pc, "p_d": pd, "s": s_raw, "s_next": sn_raw}
 
         def dd_cmd(t, s_now, model=dd):
             feat = make_features(case, np.zeros(n))[t]
@@ -294,7 +296,7 @@ def main():
         tgt_s = ref["s"][sl_te]
         dd_acc.append(
             {
-                "mse": mse_comp(pg, pc, pd, np.concatenate([s_raw[1:], s_raw[-1:]]), tgt_g, tgt_c, tgt_d, tgt_sn),
+                "mse": mse_comp(pg, pc, pd, sn_raw, tgt_g, tgt_c, tgt_d, tgt_sn),
                 "mae_g": mae(pg, tgt_g),
                 "mae_u": mae(pc - pd, tgt_u),
                 "mae_s": mae(s_raw, tgt_s),
@@ -321,7 +323,7 @@ def main():
         a = np.asarray(values, dtype=float)
         return float(a.mean()), float(a.std(ddof=0))
 
-    nb_pc, nb_pd, nb_s, nb_pg = no_battery_program(case["p_l"][sl_te], case["p_pv"][sl_te], S0, n_test)
+    nb_pc, nb_pd, nb_s, nb_pg = no_battery_program(case["p_l"][sl_te], case["p_pv"][sl_te], float(ref["s"][start]), n_test)
     ref_cost = float(np.sum(step_cost(ref["p_g"][sl_te], ref["p_c"][sl_te], ref["p_d"][sl_te], case["c_b"][sl_te], case["c_s"][sl_te])))
     nb_cost = float(np.sum(step_cost(nb_pg, nb_pc, nb_pd, case["c_b"][sl_te], case["c_s"][sl_te])))
 
@@ -347,7 +349,7 @@ def main():
         "nb_mae_g": mae(nb_pg, ref["p_g"][sl_te]),
         "nb_mae_u": mae(np.zeros(n_test), ref["u"][sl_te]),
         "nb_mae_s": mae(nb_s, ref["s"][sl_te]),
-        "nb_mse": mse_comp(nb_pg, nb_pc, nb_pd, nb_s, ref["p_g"][sl_te], ref["p_c"][sl_te], ref["p_d"][sl_te], ref["s"][sl_te]),
+        "nb_mse": mse_comp(nb_pg, nb_pc, nb_pd, nb_s, ref["p_g"][sl_te], ref["p_c"][sl_te], ref["p_d"][sl_te], ref["s_next"][sl_te]),
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     METRICS_JSON.write_text(json.dumps(metrics, indent=2), encoding="utf-8")

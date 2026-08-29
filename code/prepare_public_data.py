@@ -219,7 +219,7 @@ def synthetic_pv(hours: list[datetime]) -> dict[datetime, float]:
         if hour.date() != last_day:
             cloud = float(np.clip(0.55 + 0.35 * rng.random(), 0.25, 1.0))
             last_day = hour.date()
-        utc = hour.astimezone(timezone.utc)
+        utc = hour.replace(tzinfo=TZ).astimezone(timezone.utc)
         alt = _solar_altitude_rad(LATITUDE, LONGITUDE, utc)
         sin_a = max(0.0, math.sin(alt))
         if sin_a <= 0.0:

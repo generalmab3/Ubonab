@@ -54,6 +54,7 @@ appendices/
   reproducibility.tex    پیوست الف
   hard-layer.tex         پیوست ب
 assets/                  logo.pdf و شکل‌ها
+code/                    داده، لایه فیزیکی، آموزش و شبیه‌سازی
 docs/GUIDE.md            همین راهنما
 docs/COMPLIANCE.md       تطبیق با دستورالعمل دانشگاه
 ```
