@@ -9,8 +9,8 @@ INPUT: current SOC s, unconstrained network output z,
        load P_L, PV power P_PV, and model parameters
 
 u <- P_max * tanh(z)
-charge_cap <- min(P_max, (s_max - s) * E_max / (eta_c * Delta_t))
-discharge_cap <- min(P_max, (s - s_min) * E_max * eta_d / Delta_t)
+charge_cap <- max(0, min(P_max, (s_max - s) * E_max / (eta_c * Delta_t)))
+discharge_cap <- max(0, min(P_max, (s - s_min) * E_max * eta_d / Delta_t))
 
 P_c <- min(max(u, 0), charge_cap)
 P_d <- min(max(-u, 0), discharge_cap)
