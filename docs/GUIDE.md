@@ -117,7 +117,7 @@ latexmk -C          # پاک‌سازی
 - `\ProjectTitleFa` / `\ProjectTitleEn`
 - `\StudentNameFa` / `\StudentNameEn`
 - `\StudentNumber` — رقم؛ قلم ارقام جدا از B Mitra است
-- `\SupervisorNameFa` / `\SupervisorNameEn` — دو استاد را با `\\` جدا کنید
+- `\SupervisorNameFa` / `\SupervisorNameEn` — دو نام را با یک شکست خط جدا کنید؛ در فایل دقیقاً دو نویسهٔ بک‌اسلش بنویسید: `نام اول\\نام دوم`. چهار بک‌اسلش خط خالی می‌سازد و خطای `There's no line here to end` می‌دهد.
 - `\AdvisorNameFa` / `\AdvisorNameEn` — **کاملاً خالی** یعنی بدون استاد مشاور؛ فاصله نگذارید
 - `\AcademicYearFa` ، `\DefenseDateFa` ، `\DefenseDateEn`
 
