@@ -1,6 +1,4 @@
-"""Edge-case checks for the analytical hard-constraint layer."""
-
-from __future__ import annotations
+# تست حدی لایه سخت
 
 import numpy as np
 
@@ -55,4 +53,4 @@ if __name__ == "__main__":
     test_empty_battery_cannot_discharge()
     test_full_battery_cannot_charge()
     test_vectorized()
-    print("physics layer tests passed")
+    print("ok")

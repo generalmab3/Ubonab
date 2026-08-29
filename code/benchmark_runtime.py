@@ -1,6 +1,4 @@
-"""One-step controller timing on the archived experiment environment."""
-
-from __future__ import annotations
+# زمان یک گام کنترل‌کننده
 
 import time
 
@@ -30,7 +28,7 @@ def main():
             one_step(model, x, S0, 0.5, 0.2)
         samples.append((time.perf_counter() - t0) / 10000 * 1e6)
     arr = np.asarray(samples)
-    print(f"one-step controller: {arr.mean():.3f} ± {arr.std():.3f} microseconds")
+    print("یک گام: {:.3f} ± {:.3f} us".format(arr.mean(), arr.std()))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-"""Archived experiment parameters. Values match the thesis appendix."""
+# پارامترهای آزمایش (پیوست الف)
 
 from pathlib import Path
 
@@ -23,7 +23,7 @@ PV_NOMINAL_KW = 1.0
 PV_PERFORMANCE_RATIO = 0.82
 BACKGROUND_LOAD_KW = 0.20
 
-# Stambruges, Belgium (Candanedo et al. 2017 house location)
+# Stambruges (خانه Candanedo 2017)
 LATITUDE = 50.5083
 LONGITUDE = 3.7147
 TIMEZONE = "Europe/Brussels"

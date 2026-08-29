@@ -1,6 +1,4 @@
-"""Two-layer tanh MLP trained with Adam, in NumPy only."""
-
-from __future__ import annotations
+# MLP دو لایه، Adam، فقط NumPy
 
 import numpy as np
 

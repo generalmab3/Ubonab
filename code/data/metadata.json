@@ -1,5 +1,5 @@
 {
-  "description": "Hybrid public-data microgrid case study for the Bonab bachelor report.",
+  "description": "مطالعه موردی پروژه کارشناسی، مقیاس خانه",
   "n_hours": 3289,
   "start_local": "2016-01-11 17:00",
   "end_local": "2016-05-27 17:00",
@@ -43,7 +43,7 @@
       22,
       23
     ],
-    "note": "Engineering assumption, not a utility bill."
+    "note": "تعرفه فرضی است، قبض واقعی نیست"
   },
   "battery": {
     "E_max_kWh": 2.0,

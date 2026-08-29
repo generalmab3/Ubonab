@@ -1,6 +1,4 @@
-"""Hard-constraint battery layer, step cost, and no-battery baseline."""
-
-from __future__ import annotations
+# لایه سخت باتری و هزینه گام
 
 import numpy as np
 
@@ -8,7 +6,6 @@ from params import DELTA_T, E_MAX, ETA_C, ETA_D, KAPPA, P_MAX, S_MAX, S_MIN
 
 
 def hard_layer(s, u, p_l, p_pv):
-    """Map a signed command to feasible charge, discharge, next SOC and grid power."""
     s = np.asarray(s, dtype=float)
     u = np.asarray(u, dtype=float)
     p_l = np.asarray(p_l, dtype=float)

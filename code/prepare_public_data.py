@@ -1,12 +1,4 @@
-"""Build the hourly hybrid case study.
-
-Intended public sources are the UCI appliances set and NASA POWER.
-If those hosts are unreachable, the same calendar and Stambruges location
-are filled with a documented residential load shape and a solar-altitude
-PV envelope so the experiment remains fully reproducible from this repo.
-"""
-
-from __future__ import annotations
+# ساخت سری ساعتی مطالعه موردی (UCI/NASA یا مدل جایگزین)
 
 import csv
 import io
@@ -49,13 +41,12 @@ UCI_CSV_MIRRORS = (
 )
 
 
-def _download(url: str) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": "Ubonab-thesis-repro/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as resp:
+def _download(url):
+    with urllib.request.urlopen(url, timeout=60) as resp:
         return resp.read()
 
 
-def _try_download(url: str):
+def _try_download(url):
     try:
         return _download(url)
     except Exception as exc:
@@ -63,7 +54,7 @@ def _try_download(url: str):
         return None
 
 
-def _solar_altitude_rad(lat_deg: float, lon_deg: float, utc: datetime) -> float:
+def _solar_altitude_rad(lat_deg, lon_deg, utc):
     day = utc.timetuple().tm_yday
     gamma = 2.0 * math.pi / 365.0 * (day - 1)
     decl = (
@@ -90,7 +81,7 @@ def _solar_altitude_rad(lat_deg: float, lon_deg: float, utc: datetime) -> float:
     return math.asin(max(-1.0, min(1.0, sin_alt)))
 
 
-def _buy_price(local: datetime) -> float:
+def _buy_price(local):
     if local.weekday() >= 5:
         return BUY_WEEKEND
     hour = local.hour
@@ -101,7 +92,7 @@ def _buy_price(local: datetime) -> float:
     return BUY_NORMAL
 
 
-def target_hours() -> list[datetime]:
+def target_hours():
     hours = []
     t = START
     while t <= END:
@@ -110,21 +101,21 @@ def target_hours() -> list[datetime]:
     return hours
 
 
-def parse_uci_csv(text: str) -> dict[datetime, float]:
+def parse_uci_csv(text):
     rows = []
     reader = csv.DictReader(io.StringIO(text))
     for rec in reader:
         stamp = datetime.strptime(rec["date"], "%Y-%m-%d %H:%M:%S")
         kw = (float(rec["Appliances"]) + float(rec["lights"])) * 6.0 / 1000.0
         rows.append((stamp, kw))
-    buckets: dict[datetime, list[float]] = {}
+    buckets = {}
     for stamp, kw in rows:
         hour = stamp.replace(minute=0, second=0, microsecond=0)
         buckets.setdefault(hour, []).append(kw)
     return {hour: float(np.mean(vals) + BACKGROUND_LOAD_KW) for hour, vals in buckets.items() if len(vals) == 6}
 
 
-def load_from_uci() -> dict[datetime, float] | None:
+def load_from_uci():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     zip_path = DATA_DIR / "energydata_complete.zip"
     csv_path = DATA_DIR / "energydata_complete.csv"
@@ -146,7 +137,7 @@ def load_from_uci() -> dict[datetime, float] | None:
     return None
 
 
-def nasa_daily() -> dict | None:
+def nasa_daily():
     cache = DATA_DIR / "nasa_power_daily.json"
     if cache.exists():
         payload = json.loads(cache.read_text(encoding="utf-8"))
@@ -166,8 +157,8 @@ def nasa_daily() -> dict | None:
     return daily
 
 
-def synthetic_load(hours: list[datetime]) -> dict[datetime, float]:
-    """Residential shape at the scale of the UCI house, plus the documented 0.20 kW background."""
+def synthetic_load(hours):
+    # شکل بار مسکونی + 0.20 kW زمینه
     rng = np.random.default_rng(20160111)
     out = {}
     noise = 0.0
@@ -186,8 +177,8 @@ def synthetic_load(hours: list[datetime]) -> dict[datetime, float]:
     return out
 
 
-def pv_from_daily(hours: list[datetime], daily: dict) -> dict[datetime, float]:
-    by_day: dict = {}
+def pv_from_daily(hours, daily):
+    by_day = {}
     for hour in hours:
         by_day.setdefault(hour.date(), []).append(hour)
     pv = {}
@@ -209,8 +200,8 @@ def pv_from_daily(hours: list[datetime], daily: dict) -> dict[datetime, float]:
     return pv
 
 
-def synthetic_pv(hours: list[datetime]) -> dict[datetime, float]:
-    """Clear-sky envelope at Stambruges with a slow daily cloud factor."""
+def synthetic_pv(hours):
+    # پوش ارتفاع خورشید در Stambruges
     rng = np.random.default_rng(20160117)
     pv = {}
     cloud = 0.75
@@ -230,7 +221,7 @@ def synthetic_pv(hours: list[datetime]) -> dict[datetime, float]:
     return pv
 
 
-def write_case(hours, load, pv) -> None:
+def write_case(hours, load, pv):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     with CASE_CSV.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.writer(fh)
@@ -250,9 +241,9 @@ def write_case(hours, load, pv) -> None:
             )
 
 
-def write_metadata(n, start, end, load_src, pv_src) -> None:
+def write_metadata(n, start, end, load_src, pv_src):
     meta = {
-        "description": "Hybrid public-data microgrid case study for the Bonab bachelor report.",
+        "description": "مطالعه موردی پروژه کارشناسی، مقیاس خانه",
         "n_hours": n,
         "start_local": start.strftime("%Y-%m-%d %H:%M"),
         "end_local": end.strftime("%Y-%m-%d %H:%M"),
@@ -276,14 +267,14 @@ def write_metadata(n, start, end, load_src, pv_src) -> None:
             "sell": SELL_PRICE,
             "peak_hours_local": list(PEAK_HOURS),
             "offpeak_hours_local": list(OFFPEAK_HOURS),
-            "note": "Engineering assumption, not a utility bill.",
+            "note": "تعرفه فرضی است، قبض واقعی نیست",
         },
         "battery": {"E_max_kWh": 2.0, "P_max_kW": 1.0, "eta_c": 0.95, "eta_d": 0.95},
     }
     METADATA_JSON.write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
 
-def main() -> None:
+def main():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     hours = target_hours()
     if len(hours) != 3289:
@@ -294,22 +285,22 @@ def main() -> None:
         load = {h: uci[h] for h in hours}
         load_src = "UCI Appliances Energy Prediction, hourly mean of Appliances+lights plus 0.20 kW"
     else:
-        print("UCI file not reachable; using documented residential load shape on the same calendar.")
+        print("UCI دانلود نشد؛ بار مصنوعی روی همان تقویم.")
         load = synthetic_load(hours)
-        load_src = "Documented residential shape on the Candanedo 2017 calendar; UCI host was unreachable"
+        load_src = "بار مصنوعی روی تقویم Candanedo 2017 (UCI در دسترس نبود)"
 
     daily = nasa_daily()
     if daily is not None:
         pv = pv_from_daily(hours, daily)
         pv_src = "NASA POWER ALLSKY_SFC_SW_DWN daily, shaped by solar altitude"
     else:
-        print("NASA POWER not reachable; using solar-altitude envelope at Stambruges.")
+        print("NASA POWER در دسترس نیست؛ PV از ارتفاع خورشید.")
         pv = synthetic_pv(hours)
-        pv_src = "Solar-altitude PV envelope at Stambruges; NASA host was unreachable"
+        pv_src = "پوش ارتفاع خورشید در Stambruges (NASA در دسترس نبود)"
 
     write_case(hours, load, pv)
     write_metadata(len(hours), hours[0], hours[-1], load_src, pv_src)
-    print(f"wrote {CASE_CSV} with {len(hours)} hours")
+    print("نوشته شد:", CASE_CSV, "ساعت:", len(hours))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,4 @@
-"""Grid dynamic programming reference on signed battery power."""
-
-from __future__ import annotations
+# مرجع DP روی فرمان علامت‌دار باتری
 
 import numpy as np
 

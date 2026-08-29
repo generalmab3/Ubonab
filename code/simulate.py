@@ -1,6 +1,4 @@
-"""Run the archived experiment: DP reference, two networks, metrics and figures."""
-
-from __future__ import annotations
+# اجرای آزمایش: DP، دو شبکه، حریصانه، حذفی نگاه‌به‌جلو
 
 import csv
 import json
@@ -306,8 +304,8 @@ def main():
     case = load_case(CASE_CSV)
     n = case["p_l"].size
     n_train, n_val, n_test = split_sizes(n)
-    print(f"hours={n} split={n_train}/{n_val}/{n_test}")
-    print("solving DP reference...")
+    print("ساعت:", n, "افراز:", n_train, n_val, n_test)
+    print("DP...")
     ref = solve_reference(case["p_l"], case["p_pv"], case["c_b"], case["c_s"], S0)
 
     x_ref = make_features(case, ref["s"], use_look=True)
@@ -339,11 +337,11 @@ def main():
     feat_nl = make_features(case, np.zeros(n), use_look=False)
 
     for seed in SEEDS:
-        print(f"seed {seed}: training data-driven...")
+        print("seed", seed, "dd")
         dd, _ = train_mlp(x_tr, y_tr, x_va, y_va, HIDDEN, 4, seed, LR, BATCH, EPOCHS, PATIENCE)
-        print(f"seed {seed}: training physics-embedded...")
+        print("seed", seed, "pe")
         pe_net, _ = train_mlp(x_tr, u_tr, x_va, u_va, HIDDEN, 1, seed + 17, LR, BATCH, EPOCHS, PATIENCE, tanh_output=True)
-        print(f"seed {seed}: training physics-embedded without lookahead...")
+        print("seed", seed, "pe بدون t+1/t+3")
         pe_nl_net, _ = train_mlp(
             x_tr_nl, u_tr, x_va_nl, u_va, HIDDEN, 1, seed + 31, LR, BATCH, EPOCHS, PATIENCE, tanh_output=True
         )
@@ -414,7 +412,7 @@ def main():
     nb_pc, nb_pd, nb_s, nb_pg = no_battery_program(
         case["p_l"][sl_te], case["p_pv"][sl_te], float(ref["s"][start]), n_test
     )
-    gr_pg, gr_pc, gr_pd, gr_u, gr_s, gr_sn = greedy_rollout(case, ref["s"][start], start, n)
+    gr_pg, gr_pc, gr_pd, gr_u, gr_s, _gr_sn = greedy_rollout(case, ref["s"][start], start, n)
     ref_cost = float(
         np.sum(step_cost(ref["p_g"][sl_te], ref["p_c"][sl_te], ref["p_d"][sl_te], case["c_b"][sl_te], case["c_s"][sl_te]))
     )
@@ -460,7 +458,7 @@ def main():
     METRICS_JSON.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     print(json.dumps(metrics, indent=2))
     plot_figures(case, ref, last_pe, last_dd_rep, last_dd_raw, start, n_test)
-    print("wrote figures to", ASSETS_DIR)
+    print("شکل‌ها:", ASSETS_DIR)
 
 
 if __name__ == "__main__":
