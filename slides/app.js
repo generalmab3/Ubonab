@@ -31,6 +31,9 @@
       else document.exitFullscreen();
     } else if (e.key === "?" || e.key === "h" || e.key === "H") {
       document.body.classList.toggle("help-on");
+    } else if (e.key === "p" || e.key === "P") {
+      e.preventDefault();
+      window.print();
     } else if (e.key === "Escape") document.body.classList.remove("help-on");
   });
 

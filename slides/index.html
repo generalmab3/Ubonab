@@ -39,6 +39,55 @@
     </div>
     <div class="notes">این اسلاید فهرست است. بیش از ۳۰ ثانیه نمانید. بگویید آخر ارائه به «چه چیزی ادعا نمی‌کنیم» برمی‌گردیم.</div>
   </section>
+  <section class="slide">
+    <p class="kicker">چگونه از این فایل استفاده کنید</p>
+    <h2>ارائه، تمرین، درسنامه</h2>
+    <div class="row three">
+      <div class="card"><h3>دفاع</h3><p>یادداشت خاموش. حدود ۲۵ تا ۳۵ دقیقه روی اسلایدهای اصلی تا «پرسش‌ها». پشتیبان را نشان ندهید مگر بپرسند.</p></div>
+      <div class="card teal"><h3>تمرین</h3><p>کلید N. هر اسلاید را بلند بگویید. جواب داور همان کادر طلایی است.</p></div>
+      <div class="card navy"><h3>مطالعه</h3><p>کل درسنامه را ورق بزنید. بخش مخزن و پرسش‌پاسخ را کامل بخوانید. PDF همین محتواست.</p></div>
+    </div>
+    <p class="muted">کلیدها: فاصله بعد · N یادداشت · F تمام‌صفحه · ? راهنما</p>
+    <div class="notes">این اسلاید را در جلسه دفاع رد کنید.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">نقشه درسنامه</p>
+    <h2>نه بخش</h2>
+    <ol class="clean">
+      <li>سامانه و قیود</li>
+      <li>چرا شبکه آزاد می‌شکند و نسبت این کار با PINN</li>
+      <li>لایه سخت با مثال عددی</li>
+      <li>مرجع DP و حریصانه</li>
+      <li>دو شبکه، آموزش، شاخص</li>
+      <li>داده و درخت مخزن</li>
+      <li>نتایج</li>
+      <li>پرسش و پاسخ داور</li>
+      <li>برگه اعداد و منابع</li>
+    </ol>
+    <div class="notes">در دفاع فقط ۱، ۲، ۳، ۶، ۷ و حد ادعا را بگویید.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">واژه‌نامه کوتاه</p>
+    <h2>قبل از فرمول‌ها</h2>
+    <table class="small">
+      <tr><th>واژه</th><th>معنی در این گزارش</th></tr>
+      <tr><td>وضعیت شارژ (SOC)</td><td>نسبت انرژی ذخیره‌شده به ظرفیت نامی باتری</td></tr>
+      <tr><td>قابل اجرا</td><td>خروجی روی مدل باتری تعریف‌شده اعمال‌شدنی است</td></tr>
+      <tr><td>جریمه نرم</td><td>نقض قید با ضریب در زیان؛ تضمین صفر ندارد</td></tr>
+      <tr><td>قید سخت</td><td>قید در خود نگاشت خروجی</td></tr>
+      <tr><td>دوره</td><td>یک عبور کامل از مجموعه آموزش</td></tr>
+      <tr><td>دسته</td><td>تعداد نمونه در یک گام آدام؛ اینجا ۶۴</td></tr>
+      <tr><td>آزمون بازگشتی</td><td>SOC ورودی هر ساعت از خروجی خود مدل می‌آید</td></tr>
+      <tr><td>بذر</td><td>مقداردهی تصادفی؛ پنج بذر فقط آموزش را عوض می‌کنند</td></tr>
+    </table>
+    <div class="notes">اگر داور اصطلاح انگلیسی گفت، فارسی‌اش را بگویید بعد مخفف.</div>
+  </section>
+
+
 
   <section class="slide">
     <p class="kicker">یک جمله</p>
@@ -192,6 +241,47 @@
     <p>توازن با تعریف \(P_{\mathrm{G}}\) برقرار می‌شود. در این مطالعه سقف واردات یا صادرات گذاشته نشده است.</p>
     <div class="notes">این همان جایی است که فیزیک «آسان» می‌شود. پنهان نکنید. بگویید اگر سقف اتصال باشد لایه باید عوض شود.</div>
   </section>
+  <section class="slide">
+    <p class="kicker">مثال عددی لایه سخت</p>
+    <h2>یک ساعت مشخص</h2>
+    <p>\(s=0.50\)، \(u=+0.40\,\mathrm{kW}\)، \(P_{\mathrm{L}}=0.80\)، \(P_{\mathrm{PV}}=0.30\)</p>
+    <div class="eq" style="font-size:1.05rem">\[\bar P_{\mathrm{c}}=\min\bigl(1,\tfrac{(0.90-0.50)\times 2}{0.95}\bigr)=0.842,\quad P_{\mathrm{c}}=\min(0.40,0.842)=0.40,\quad P_{\mathrm{d}}=0\]</div>
+    <div class="eq" style="font-size:1.05rem">\[s_{+}=0.50+\tfrac{0.95\times 0.40}{2}=0.69,\qquad P_{\mathrm{G}}=0.80+0.40-0.30=0.90\]</div>
+    <p>توازن: \(0.90+0.30+0=0.80+0.40\). انحصار برقرار است چون \(u>0\).</p>
+    <div class="notes">این را روی تخته هم می‌توانید تکرار کنید. نشان می‌دهد لایه «یاد نمی‌گیرد»؛ حساب می‌کند.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">مثال حدی</p>
+    <h2>باتری خالی دشارژ نمی‌شود</h2>
+    <p>\(s=s_{\min}=0.20\) و فرمان کامل دشارژ \(u=-1\):</p>
+    <div class="eq">\[\bar P_{\mathrm{d}}=\min\bigl(1,\tfrac{(0.20-0.20)\times 2\times 0.95}{1}\bigr)=0 \Rightarrow P_{\mathrm{d}}=0\]</div>
+    <p>همین برای \(s=0.90\) و \(u=+1\): سقف شارژ صفر است. فایل <span class="num">code/test_physics.py</span> همین دو حد را assert می‌کند.</p>
+    <div class="notes">اگر گفتند اثبات نرم‌افزاری کجاست، همین تست است.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">ترمیم مدل آزاد</p>
+    <h2>پس‌پردازش فقط برای هزینه</h2>
+    <div class="eq">\[u_{\mathrm{safe}}=\mathrm{clip}(\hat P_{\mathrm{c}}-\hat P_{\mathrm{d}},-P_{\max},P_{\max})\]</div>
+    <p>سپس همان لایه سخت. SOC مسیر ترمیم از دینامیک باتری می‌آید نه از خروجی چهارم شبکه.</p>
+    <p>نقض‌های جدول امکان‌پذیری روی خروجی <strong>خام</strong> است. هزینه روی مسیر ترمیم‌شده است تا فرمان ناممکن ارزان به نظر نرسد.</p>
+    <div class="notes">تفاوت معماری: در PE لایه داخل مدل است و گرادیان روی tanh(z) است نه روی چهار خروجی آزاد.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">چرا MAE شبکه با MAE فرمان یکی است؟</p>
+    <h2>در برنامه انحصاری</h2>
+    <p>اگر \(P_{\mathrm{c}}P_{\mathrm{d}}=0\) آن‌گاه \(u=P_{\mathrm{c}}-P_{\mathrm{d}}\) و</p>
+    <div class="eq">\[P_{\mathrm{G}}-P_{\mathrm{G}}^{\star}=(P_{\mathrm{c}}-P_{\mathrm{d}})-(P_{\mathrm{c}}^{\star}-P_{\mathrm{d}}^{\star})=u-u^{\star}\]</div>
+    <p>پس برای مرجع، بدون‌باتری، حریصانه و فیزیک‌تعبیه‌شده، \(\mathrm{MAE}(P_{\mathrm{G}})=\mathrm{MAE}(u)\). مدل آزاد خام انحصار ندارد و دو ستون فرق می‌کنند.</p>
+    <div class="notes">این نکته فصل ۴ است. اگر جدول را دیدند و پرسیدند «چرا دو عدد یکی است؟» همین را بگویید.</div>
+  </section>
+
+
 
   <section class="slide">
     <p class="kicker">آموزش مدل پیشنهادی</p>
@@ -264,6 +354,31 @@
     </ul>
     <div class="notes">دوره و دسته را اگر پرسیدند همان تعریف اسلاید را بگویید. انحراف معیار جدول پراکندگی آموزش است نه تغییر داده.</div>
   </section>
+  <section class="slide">
+    <p class="kicker">شبکه عصبی</p>
+    <h2>چه چیزی داخل MLP است؟</h2>
+    <ul class="clean">
+      <li>دو لایه پنهان ۳۲ واحدی، فعال‌ساز تانژانت هیپربولیک</li>
+      <li>وزن‌ها با بازه \(\sqrt{6/(n_{\mathrm{in}}+n_{\mathrm{out}})}\)</li>
+      <li>آدام: \(\beta_1=0.9\)، \(\beta_2=0.999\)، نرخ \(1.2\times 10^{-3}\)</li>
+      <li>فقط نام‌پای؛ بدون تنسورفلو یا پای‌تورچ</li>
+      <li>مدل PE روی خروجی خام \(z\) تانژانت می‌گذارد تا با \(u^\star/P_{\max}\) مقایسه شود</li>
+    </ul>
+    <p class="muted">کد: <span class="num">code/mlp.py</span></p>
+    <div class="notes">نوآوری در MLP نیست؛ در لایه بعد از آن است. این را صریح بگویید.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">ناهماهنگی آموزش و آزمون</p>
+    <h2>Teacher forcing در برابر بازگشت</h2>
+    <p>در آموزش، \(s\) ورودی از مسیر مرجع DP می‌آید. در آزمون بازگشتی، \(s\) از خود مدل می‌آید.</p>
+    <p>پس بخشی از شکاف هزینه می‌تواند از همین جابه‌جایی توزیع باشد، نه فقط از خطای یک‌گامی.</p>
+    <div class="call">اگر داور گفت چرا به DP نمی‌رسید، اول این را بگویید، بعد گسستگی DP و افق کامل مرجع را.</div>
+    <div class="notes">نام لاتین teacher forcing را لازم نیست بگویید مگر بپرسند.</div>
+  </section>
+
+
 
   <section class="slide">
     <p class="kicker">شاخص‌ها</p>
@@ -290,6 +405,70 @@
     <p>اگر UCI و NASA POWER در دسترس باشند اسکریپت از آن‌ها می‌سازد؛ در این اجرا میزبان‌ها بسته بودند.</p>
     <div class="notes">این اسلاید اعتبار علمی شماست. دروغ نگویید که داده میدانی دارید. تقویم از Candanedo است نه سری واقعی خانه.</div>
   </section>
+  <section class="slide">
+    <p class="kicker">درخت مخزن</p>
+    <h2>هر پوشه چه کار می‌کند</h2>
+    <pre class="code">chapters/     متن پنج فصل
+frontmatter/  چکیده، عنوان، علائم
+appendices/   پارامترها و شبه‌کد لایه
+code/         آزمایش قابل اجرا
+assets/       سه شکل نتایج
+slides/       ارائه و درسنامه
+config/       قالب؛ metadata نام‌ها
+references.bib
+docs/GUIDE.md قالب دانشگاه</pre>
+    <div class="notes">قالب را دست نزده‌اید. مشخصات در metadata.tex است.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">کد آزمایش</p>
+    <h2>فایل‌ها به ترتیب اجرا</h2>
+    <table class="small">
+      <tr><th>فایل</th><th>کار</th></tr>
+      <tr><td>params.py</td><td>همه اعداد پیوست الف</td></tr>
+      <tr><td>prepare_public_data.py</td><td>سری ۳۲۸۹ ساعته؛ UCI/NASA یا مدل جایگزین</td></tr>
+      <tr><td>physics.py</td><td>لایه سخت، هزینه، بدون باتری</td></tr>
+      <tr><td>test_physics.py</td><td>حد خالی/پر و حالت برداری</td></tr>
+      <tr><td>dynamic_programming.py</td><td>مرجع DP</td></tr>
+      <tr><td>mlp.py</td><td>شبکه و آدام</td></tr>
+      <tr><td>simulate.py</td><td>پنج بذر، حریصانه، حذفی، شکل، metrics.json</td></tr>
+      <tr><td>benchmark_runtime.py</td><td>زمان یک گام</td></tr>
+    </table>
+    <div class="notes">اگر گفتند نتایج از کجا آمده، بگویید python code/simulate.py</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">بازتولید</p>
+    <h2>از ریشه مخزن</h2>
+    <pre class="code">python3 -m venv .venv
+.venv/bin/pip install -r code/requirements.txt
+.venv/bin/python code/prepare_public_data.py
+.venv/bin/python code/test_physics.py
+.venv/bin/python code/simulate.py
+.venv/bin/python code/benchmark_runtime.py</pre>
+    <p>خروجی: <span class="num">code/data/metrics.json</span> و سه شکل در <span class="num">assets/</span>. جداول پایان‌نامه باید با همین فایل یکی باشند.</p>
+    <div class="notes">UCI/NASA اگر باز شود سری عوض می‌شود و باید جداول را از نو نوشت.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پارامترها</p>
+    <h2>همان پیوست الف</h2>
+    <table class="small">
+      <tr><th>کمیت</th><th>مقدار</th></tr>
+      <tr><td>\(\eta_c,\eta_d\)</td><td>۰٫۹۵ ، ۰٫۹۵</td></tr>
+      <tr><td>\(E_{\max}, P_{\max}\)</td><td>۲ کیلووات‌ساعت ، ۱ کیلووات</td></tr>
+      <tr><td>\(s_{\min}, s_{\max}, s_0\)</td><td>۰٫۲۰ ، ۰٫۹۰ ، ۰٫۵۰</td></tr>
+      <tr><td>\(\kappa\)</td><td>۰٫۰۰۸</td></tr>
+      <tr><td>تعرفه</td><td>۰٫۱۶ / ۰٫۲۲ / ۰٫۳۴ / ۰٫۲۰ ؛ فروش ۰٫۰۶</td></tr>
+      <tr><td>اوج محلی</td><td>ساعت ۱۷ تا ۲۱</td></tr>
+    </table>
+    <div class="notes">همه فرض مهندسی‌اند مگر آن‌که UCI/NASA واقعاً خوانده شود.</div>
+  </section>
+
+
 
   <section class="slide">
     <p class="kicker">نتیجه · دقت</p>
@@ -478,6 +657,155 @@
     <p class="muted">فهرست کامل در فایل <span class="num">references.bib</span> گزارش است.</p>
     <div class="notes">Oladejo را فقط برای تعریف مسئله بگویید؛ نظریه بازی‌اش پیاده نشده.</div>
   </section>
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱</p>
+    <div class="qa">
+      <div class="q">این کار PINN است؟</div>
+      <div class="a">از خانواده یادگیری فیزیک‌آگاه است، اما PINN به معنی Raissi نیست. PINN باقیمانده PDE را در زیان می‌گذارد. اینجا فیزیک جبری ساعتی در لایه خروجی است و برچسب از DP می‌آید. نام دقیق: فیزیک‌تعبیه‌شده با قید سخت. جریمه نرم را هم روی همین داده آموزش نداده‌ایم.</div>
+    </div>
+    <div class="notes">جمله را از حفظ.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۲</p>
+    <div class="qa">
+      <div class="q">پس نوآوری کجاست اگر لایه همان گیره باتری است؟</div>
+      <div class="a">نوآوری نظری یک لایه جدید بهینه‌سازی نیست. سهم کارشناسی این است که قیود بهره‌برداری به خروجی شبکه چسبانده شود، با مرجع DP و آزمون بازگشتی سنجیده شود، و نشان داده شود خطای کم برای اجرا کافی نیست. خود گزارش برتری عمومی بر OptNet یا CPO را ادعا نمی‌کند.</div>
+    </div>
+    <div class="notes">فروتن باشید. داور سخت‌گیر همین را می‌خواهد.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۳</p>
+    <div class="qa">
+      <div class="q">تفاوت شما با پس‌پردازش مدل آزاد چیست؟</div>
+      <div class="a">نگاشت ایمنی بعد از آموزش همان لایه سخت را روی \(u=\mathrm{clip}(\hat P_c-\hat P_d)\) اعمال می‌کند. در PE لایه داخل مدل است: شبکه فقط z می‌آموزد و گرادیان از فضای مجاز می‌گذرد. در آزمون PE تعمیر جدا ندارد. از نظر هزینه، پنج بذر اختلاف قاطع نشان نداد؛ پس ادعا نکنید معماری لزوماً ارزان‌تر است.</div>
+    </div>
+    <div class="notes">اعداد: PE 42.418±0.511 در برابر DD ترمیم 42.234±0.318.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۴</p>
+    <div class="qa">
+      <div class="q">داده واقعی است؟</div>
+      <div class="a">تقویم و محل از مجموعه Candanedo ۲۰۱۷ است (خانه Stambruges). در این اجرا میزبان UCI و NASA POWER بسته بود؛ بار مدل مسکونی و PV پوش ارتفاع خورشید است. تعرفه فرض است. این مطالعه موردی ترکیبی در مقیاس یک خانه است، نه آزمون میدانی ریزشبکه.</div>
+    </div>
+    <div class="notes">اگر دروغ بگویید کل دفاع می‌ریزد. اسکریپت در صورت دسترسی UCI را می‌خواند.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۵</p>
+    <div class="qa">
+      <div class="q">توازن توان خیلی آسان نیست؟ شبکه که سقف ندارد.</div>
+      <div class="a">درست است. \(P_G\) متغیر آزاد است و توازن با تعریف بسته می‌شود. قید غیربدیهی جعبه SOC، سقف توان باتری، نامنفی بودن و انحصار است. اگر سقف اتصال باشد باید فرمان باتری با بازه مجاز \(P_G\) سازگار شود. این محدودیت صریح فصل ۴ است.</div>
+    </div>
+    <div class="notes">پنهان نکنید؛ امتیاز صداقت می‌گیرید.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۶</p>
+    <div class="qa">
+      <div class="q">۲٫۸ درصد از چه مرجعی است؟ بهینه پیوسته؟</div>
+      <div class="a">از همین DP گسسته: گام SOC برابر ۰٫۰۱ و ۴۱ فرمان. بهینه پیوسته را ادعا نمی‌کنیم. شرط نهایی \(V_T=0\) است. فاصله فیزیک‌تعبیه‌شده \(2.8\pm 1.2\) درصد است.</div>
+    </div>
+    <div class="notes">عدد ۲٫۸ را از حفظ بگویید؛ مرجع را «همین گزارش» بنامید نه ادبیات.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۷</p>
+    <div class="qa">
+      <div class="q">نگاه‌به‌جلوی بی‌خطا که تقلب است.</div>
+      <div class="a">برای مقایسه آفلاین با DP است که خودش افق کامل را می‌بیند. آزمایش حذفی همان مدل را بدون t+1 و t+3 آموزش داد؛ هزینه بدتر نشد (۴۱٫۸۷۲ ± ۰٫۲۴۴). پس فاصله ۲٫۸٪ را نمی‌توان به آن ورودی‌ها نسبت داد. عملکرد با خطای پیش‌بینی آزمایش نشده است.</div>
+    </div>
+    <div class="notes">نتیجه حذفی خلاف انتظار است؛ همان را بگویید.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۸</p>
+    <div class="qa">
+      <div class="q">چرا حریصانه تقریباً بدون باتری است؟</div>
+      <div class="a">چون فقط هزینه همین ساعت را می‌بیند. شارژ اکنون می‌خرد و κ می‌پردازد بدون ارزش آینده. معمولاً انرژی اولیه را خالی می‌کند. هزینه ۴۵٫۰۹۹ در برابر ۴۵٫۲۳۳. پس ارزش باتری در این تعرفه بین‌ساعتی است و مرجع باید DP باشد نه قاعده حریصانه.</div>
+    </div>
+    <div class="notes">اگر پرسیدند «پس باتری بی‌فایده است؟» بگویید برای حریصانه تقریباً بله؛ برای DP خیر.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۹</p>
+    <div class="qa">
+      <div class="q">پنج بذر برای ادعا کم نیست؟ آزمون فرض کجاست؟</div>
+      <div class="a">کم است و آزمون فرض گزارش نشده. انحراف معیار فقط پراکندگی مقداردهی است. همپوشانی ±۰٫۳۱۸ و ±۰٫۵۱۱ یعنی نمی‌توان گفت PE از DD ترمیم‌شده گران‌تر یا ارزان‌تر است. صفر نقض PE هم آماری نیست؛ ساختاری است.</div>
+    </div>
+    <div class="notes">آزمون t نسازید. همان محدودیت را بگویید.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱۰</p>
+    <div class="qa">
+      <div class="q">Oladejo نظریه بازی است. کجایش را پیاده کردید؟</div>
+      <div class="a">هیچ‌جا. آن مقاله فقط برای آشنایی با ریزشبکه متصل به شبکه و نماد توان است. تخصیص سود و چندذی‌نفع خارج از قلمرو است و ادعا نشده.</div>
+    </div>
+    <div class="notes">فصل ۱ همین را نوشته.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱۱</p>
+    <div class="qa">
+      <div class="q">اگر سقف \(P_G\) باشد چه می‌کنید؟</div>
+      <div class="a">باید بعد از محاسبه \(P_G\) آن را در بازه مجاز ببرید و در صورت نیاز \(P_c\) یا \(P_d\) را کم کنید تا هم توازن و هم جعبه SOC بماند. این در کد فعلی نیست.</div>
+    </div>
+    <div class="notes">جزئیات پیاده‌سازی را اگر ندانستید بگویید «در گزارش طرح شده، پیاده نشده».</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱۲</p>
+    <div class="qa">
+      <div class="q">چرا MSE را از جدول اصلی برداشتید؟</div>
+      <div class="a">چهار مؤلفه هم‌واحد نیستند (کیلووات و SOC). میانگین مربع‌شان معیار فیزیکی گمراه‌کننده است. MAE جداگانه خواناست. MSE در metrics.json و پیوست مانده: داده‌محور ۰٫۰۱۳۳ ± ۰٫۰۰۰۸ و PE ۰٫۰۱۴۵ ± ۰٫۰۰۱۶.</div>
+    </div>
+    <div class="notes">نگویید MSE بی‌ارزش است؛ بگویید برای این چهار کمیت گمراه‌کننده است.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱۳</p>
+    <div class="qa">
+      <div class="q">زمان واقعی کنترل است؟</div>
+      <div class="a">یک گام شبکه به‌اضافه لایه حدود ۲۱٫۵ میکروثانیه روی همین مفسر اندازه گرفته شد. مدل پردازنده در آن محیط معلوم نبود. ادعای PLC یا ریزثانیه صنعتی نمی‌کنیم. DP برای ۳۲۸۹ ساعت ۰٫۵۴۰ ثانیه بود.</div>
+    </div>
+    <div class="notes">benchmark_runtime.py را نام ببرید اگر خواستند بازتولید کنند.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱۴</p>
+    <div class="qa">
+      <div class="q">استاد دوم کیست؟</div>
+      <div class="a">در نسخه حاضر فقط استاد راهنما دکتر بابک آذرنوید است.</div>
+    </div>
+    <div class="notes">نام دیگری روی جلد و سپاسگزاری نیست.</div>
+  </section>
+
+
+  <section class="slide">
+    <p class="kicker">پرسش داور ۱۵</p>
+    <div class="qa">
+      <div class="q">یک جمله جمع‌بندی برای صورتجلسه؟</div>
+      <div class="a">یک شبکه کوچک با لایه فیزیکی بدون پارامتر، روی مطالعه موردی خانگی ترکیبی، فرمان باتری قابل اجرا می‌سازد؛ نقض قیود مدل‌شده صفر است و هزینه حدود ۲٫۸٪ از مرجع DP گسسته بیشتر و ۶٫۲٪ از بدون باتری کمتر است.</div>
+    </div>
+    <div class="notes">همین را آخر دفاع بگویید.</div>
+  </section>
+
 
   <div class="foot">
     <span>یادگیری فیزیک‌آگاه با قیود سخت · بابازاد · بناب</span>
