@@ -35,10 +35,7 @@ from params import (
 TZ = ZoneInfo(TIMEZONE)
 START = datetime(2016, 1, 11, 17)
 END = datetime(2016, 5, 27, 17)
-UCI_CSV_MIRRORS = (
-    UCI_ZIP_URL,
-    "https://archive.ics.uci.edu/ml/machine-learning-databases/00374/energydata_complete.csv",
-)
+UCI_CSV_URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/00374/energydata_complete.csv"
 
 
 def _download(url):
@@ -127,7 +124,7 @@ def load_from_uci():
             text = zf.read(name).decode("utf-8")
         csv_path.write_text(text, encoding="utf-8")
         return parse_uci_csv(text)
-    blob = _try_download(UCI_CSV_MIRRORS[1])
+    blob = _try_download(UCI_CSV_URL)
     if blob and b"Appliances" in blob[:2000]:
         text = blob.decode("utf-8")
         csv_path.write_text(text, encoding="utf-8")
