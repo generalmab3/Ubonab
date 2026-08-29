@@ -19,3 +19,10 @@
 
 # استثنا: لوگوی دانشگاه
 !assets/*.pdf
+
+# پایتون
+.venv/
+__pycache__/
+*.pyc
+code/data/energydata_complete.zip
+code/data/nasa_power_daily.json
