@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from params import E_MAX, N_ACTIONS, P_MAX, S_MAX, S_MIN, SOC_GRID_STEP
+from params import N_ACTIONS, P_MAX, S_MAX, S_MIN, SOC_GRID_STEP
 from physics import hard_layer, step_cost
 
 

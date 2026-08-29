@@ -1,4 +1,4 @@
-# MLP دو لایه، Adam، فقط NumPy
+# MLP دو لایه با آدام، فقط نام‌پای
 
 import numpy as np
 

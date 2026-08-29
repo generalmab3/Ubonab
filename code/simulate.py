@@ -2,7 +2,6 @@
 
 import csv
 import json
-from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -29,10 +28,9 @@ from physics import clip_signed_command, hard_layer, no_battery_program, power_r
 
 
 def load_case(path: Path):
-    stamps, p_l, p_pv, c_b, c_s, hour, work = [], [], [], [], [], [], []
+    p_l, p_pv, c_b, c_s, hour, work = [], [], [], [], [], []
     with path.open(encoding="utf-8") as fh:
         for rec in csv.DictReader(fh):
-            stamps.append(datetime.strptime(rec["timestamp"], "%Y-%m-%d %H:%M"))
             p_l.append(float(rec["P_L_kW"]))
             p_pv.append(float(rec["P_PV_kW"]))
             c_b.append(float(rec["c_b"]))
@@ -40,7 +38,6 @@ def load_case(path: Path):
             hour.append(int(rec["hour"]))
             work.append(int(rec["is_workday"]))
     return {
-        "stamp": stamps,
         "p_l": np.asarray(p_l, dtype=float),
         "p_pv": np.asarray(p_pv, dtype=float),
         "c_b": np.asarray(c_b, dtype=float),
