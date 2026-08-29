@@ -15,22 +15,22 @@
     \toprule
     \textbf{پارامتر} & \textbf{مقدار} & \textbf{منبع در کد یا داده} \\
     \midrule
-    $\eta_{\mathrm{c}},\,\eta_{\mathrm{d}}$ & $0.95$, $0.95$ & \lr{simulate.py} \\
-    $E_{\max}$ & $2.0\,\mathrm{kWh}$ & \lr{simulate.py} \\
-    $P_{\max}$ & $1.0\,\mathrm{kW}$ & \lr{simulate.py} \\
-    $s_{\min},\,s_{\max}$ & $0.20$, $0.90$ & \lr{simulate.py} \\
-    $\kappa$ & $0.008$ واحد پولی بر کیلووات‌ساعت عبوری & \lr{simulate.py} \\
+    $\eta_{\mathrm{c}},\,\eta_{\mathrm{d}}$ & $0{.}95$, $0{.}95$ & \lr{simulate.py} \\
+    $E_{\max}$ & $2{.}0\,\mathrm{kWh}$ & \lr{simulate.py} \\
+    $P_{\max}$ & $1{.}0\,\mathrm{kW}$ & \lr{simulate.py} \\
+    $s_{\min},\,s_{\max}$ & $0{.}20$, $0{.}90$ & \lr{simulate.py} \\
+    $\kappa$ & $0{.}008$ واحد پولی بر کیلووات‌ساعت عبوری & \lr{simulate.py} \\
     $\Delta t$ & $1\,\mathrm{h}$ & \lr{simulate.py} \\
-    تعرفه خرید $c_{\mathrm{b}}$ & کم‌باری $0.16$؛ عادی $0.22$؛ اوج $0.34$؛ تخفیف آخر هفته $0.20$ & \lr{metadata.json}؛ دوره‌های دقیق ساعت‌به‌ساعت در \lr{public\_microgrid\_case.csv} \\
-    تعرفه فروش $c_{\mathrm{s}}$ & $0.06$ & \lr{metadata.json} \\
-    شبکه \lr{SOC} در \lr{DP} & $0.20$ تا $0.90$ با گام $0.01$ ($71$ نقطه) & \lr{SOC\_GRID} \\
+    تعرفه خرید $c_{\mathrm{b}}$ & کم‌باری $0{.}16$؛ عادی $0{.}22$؛ اوج $0{.}34$؛ تخفیف آخر هفته $0{.}20$ & \lr{metadata.json}؛ دوره‌های دقیق ساعت‌به‌ساعت در \lr{public\_microgrid\_case.csv} \\
+    تعرفه فروش $c_{\mathrm{s}}$ & $0{.}06$ & \lr{metadata.json} \\
+    شبکه \lr{SOC} در \lr{DP} & $0{.}20$ تا $0{.}90$ با گام $0{.}01$ ($71$ نقطه) & \lr{SOC\_GRID} \\
     شبکه فرمان در \lr{DP} & $41$ مقدار یکنواخت روی $[-1,1]\,\mathrm{kW}$ & \lr{ACTION\_GRID} \\
     شرط نهایی \lr{DP} & $V_{T}(s)=0$ & \lr{dynamic\_programming\_reference} \\
     معماری هر شبکه & دو لایه پنهان $32$ واحدی با \lr{tanh} & کلاس \lr{MLP} \\
     اندازه دسته & $64$ & \lr{BATCH} \\
     بیشینه دوره آموزش & $450$ & \lr{EPOCHS} \\
     شکیبایی توقف زودهنگام & $55$ دوره & \lr{PATIENCE} \\
-    بهینه‌ساز و نرخ یادگیری & آدام؛ $1.2\times 10^{-3}$ & \lr{MLP.adam} و \lr{LR} \\
+    بهینه‌ساز و نرخ یادگیری & آدام؛ $1{.}2\times 10^{-3}$ & \lr{MLP.adam} و \lr{LR} \\
     بذرها & $7,11,19,23,29$ & \lr{SEEDS} \\
     افراز داده & زمانی $60/20/20$؛ $1973/657/659$ & \lr{simulate.py} \\
     \bottomrule
