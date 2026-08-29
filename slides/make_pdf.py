@@ -1,6 +1,7 @@
-"""Build a study PDF from slides/index.html (RTL Persian, DejaVu)."""
+"""Build an RTL PDF from a slides HTML file."""
 
 import re
+import sys
 from pathlib import Path
 
 import arabic_reshaper
@@ -8,10 +9,8 @@ from bidi.algorithm import get_display
 from fpdf import FPDF
 
 ROOT = Path(__file__).resolve().parent
-HTML = (ROOT / "index.html").read_text(encoding="utf-8")
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONTB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-OUT = ROOT / "defense-handbook.pdf"
 
 
 def fa(s):
@@ -98,6 +97,9 @@ def blocks(html):
     return out
 
 
+BANNER = "یادگیری فیزیک‌آگاه با قیود سخت · بابازاد · بناب"
+
+
 class PDF(FPDF):
     def header(self):
         self.set_font("DejaVu", "", 9)
@@ -105,7 +107,7 @@ class PDF(FPDF):
         self.cell(
             0,
             6,
-            fa("درسنامه دفاع · یادگیری فیزیک‌آگاه با قیود سخت · بابازاد · بناب"),
+            fa(BANNER),
             align="R",
             new_x="LMARGIN",
             new_y="NEXT",
@@ -124,7 +126,19 @@ class PDF(FPDF):
 
 
 def main():
-    slides = blocks(HTML)
+    html_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "index.html"
+    if not html_path.is_absolute():
+        html_path = (Path.cwd() / html_path).resolve()
+    out = Path(sys.argv[2]) if len(sys.argv) > 2 else html_path.with_suffix(".pdf")
+    if not out.is_absolute():
+        out = (Path.cwd() / out).resolve()
+    if html_path.name == "index.html" and len(sys.argv) < 3:
+        out = ROOT / "defense-handbook.pdf"
+    html = html_path.read_text(encoding="utf-8")
+    slides = blocks(html)
+    cover = "اسلاید جلسه دفاع" if html_path.name == "defense.html" else "درسنامه جلسه دفاع"
+    global BANNER
+    BANNER = cover + " · بابازاد · بناب"
     pdf = PDF(orientation="L", format="A4", unit="mm")
     pdf.set_auto_page_break(True, 16)
     pdf.set_margins(16, 18, 16)
@@ -135,7 +149,7 @@ def main():
     pdf.add_page()
     pdf.set_font("DejaVu", "B", 22)
     pdf.set_text_color(14, 79, 76)
-    pdf.multi_cell(w, 12, fa("درسنامه جلسه دفاع"), align="R")
+    pdf.multi_cell(w, 12, fa(cover), align="R")
     pdf.set_font("DejaVu", "", 14)
     pdf.multi_cell(
         w,
@@ -196,8 +210,8 @@ def main():
             pdf.multi_cell(w, 7, fa("یادداشت گوینده / پاسخ داور"), align="R", fill=True)
             pdf.set_font("DejaVu", "", 11)
             pdf.multi_cell(w, 6.5, fa(s["notes"]), align="R", fill=True)
-    pdf.output(OUT)
-    print("wrote", OUT, "pages", pdf.page_no(), "slides", len(slides))
+    pdf.output(out)
+    print("wrote", out, "pages", pdf.page_no(), "slides", len(slides))
 
 
 if __name__ == "__main__":
