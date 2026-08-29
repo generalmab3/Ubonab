@@ -1,0 +1,47 @@
+% نقش: فرمان‌های کمکی قالب. در متن فصل از \pcite و \lr و \unnumberedchapter استفاده کنید.
+
+% bidi ترتیب اجزای شماره را در متن راست‌به‌چپ معکوس می‌کند.
+% ترتیب داخلی شمارنده‌ها برعکس تعریف می‌شود تا خروجی «شماره-فصل» دیده شود.
+% این فرمان باید پس از \begin{document} اجرا شود.
+\makeatletter
+\newcommand{\ApplyBonabNumbering}{%
+  \renewcommand{\thesection}{\arabic{section}\@SepMark\thechapter}%
+  \renewcommand{\thesubsection}{\arabic{subsection}\@SepMark\arabic{section}\@SepMark\thechapter}%
+  \renewcommand{\thesubsubsection}{\arabic{subsubsection}\@SepMark\arabic{subsection}\@SepMark\arabic{section}\@SepMark\thechapter}%
+  \renewcommand{\thefigure}{\arabic{figure}\@SepMark\thechapter}%
+  \renewcommand{\thetable}{\arabic{table}\@SepMark\thechapter}%
+  \renewcommand{\theequation}{\arabic{equation}\@SepMark\thechapter}%
+  \renewcommand{\thedefinition}{\arabic{definition}\@SepMark\thechapter}%
+  \renewcommand{\thelstlisting}{\arabic{lstlisting}\@SepMark\thechapter}%
+  \@addtoreset{lstlisting}{chapter}%
+}
+\makeatother
+
+% ارجاع در متن فارسی: براکت و شماره با قلم لاتین تا B Mitra مربع نسازد.
+\newcommand{\pcite}[1]{\lr{\cite{#1}}}
+
+\newcommand{\unnumberedchapter}[1]{%
+  \chapter*{#1}%
+  \phantomsection%
+  \addcontentsline{toc}{chapter}{#1}%
+}
+\newcommand{\preliminarynumbering}{%
+  \cleardoublepage
+  \pagenumbering{harfi}%
+  \hypersetup{pageanchor=true}%
+  \pagestyle{plain}
+}
+\newcommand{\mainnumbering}{%
+  \hypersetup{pageanchor=false}%
+  \cleardoublepage
+  \pagenumbering{arabic}
+  \hypersetup{pageanchor=true}
+  \pagestyle{plain}
+}
+
+\hypersetup{
+  pdftitle={\ProjectTitleEn},
+  pdfauthor={\StudentNameEn},
+  pdfsubject={\DegreeNameEn{} in \FieldNameEn},
+  pdfkeywords={\KeywordsEn}
+}
