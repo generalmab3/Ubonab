@@ -3,12 +3,40 @@
   var i = 0;
   var bar = document.getElementById("bar");
   var count = document.getElementById("count");
+  var fa = "۰۱۲۳۴۵۶۷۸۹";
+
+  function faNum(n) {
+    return String(n).replace(/[0-9]/g, function (d) { return fa[d]; });
+  }
+
+  function toFaDigits(s) {
+    s = String(s);
+    var prev = "";
+    while (s !== prev) {
+      prev = s;
+      s = s.replace(/([0-9۰-۹])\.([0-9۰-۹])/g, "$1٫$2");
+    }
+    return s.replace(/[0-9]/g, function (d) { return fa[d]; });
+  }
+
+  function persianize(root) {
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach(function (n) {
+      if (!n.parentElement) return;
+      var tag = n.parentElement.tagName;
+      if (tag === "SCRIPT" || tag === "STYLE") return;
+      if (!n.nodeValue || !/[0-9.]/.test(n.nodeValue)) return;
+      n.nodeValue = toFaDigits(n.nodeValue);
+    });
+  }
 
   function go(n) {
     i = Math.max(0, Math.min(slides.length - 1, n));
     slides.forEach(function (s, k) { s.classList.toggle("on", k === i); });
     bar.style.width = ((i + 1) / slides.length * 100) + "%";
-    count.textContent = (i + 1) + " / " + slides.length;
+    count.textContent = faNum(i + 1) + " / " + faNum(slides.length);
     history.replaceState(null, "", "#s" + (i + 1));
   }
 
@@ -50,6 +78,7 @@
       throwOnError: false
     });
   }
+  persianize(document.getElementById("deck"));
 
   go(parseHash());
   window.addEventListener("hashchange", function () { go(parseHash()); });

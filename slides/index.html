@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>جلسه دفاع — یادگیری فیزیک‌آگاه با قیود سخت</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -24,8 +24,11 @@
         <strong>محمد امیر بابازاد</strong>
       </div>
       <div>
-        <div class="muted">استادان راهنما</div>
+        <div class="muted">استاد راهنما</div>
         <strong>دکتر بابک آذرنوید</strong>
+      </div>
+      <div>
+        <div class="muted">استاد راهنما</div>
         <strong>دکتر زهرا مختارنژاد</strong>
       </div>
     </div>
@@ -145,11 +148,10 @@
     <div class="row two">
       <div class="card">
         <h3>حد ایمنی</h3>
-        <div class="eq">\[0.20\le s\le 0.90,\quad 0\le P_{\mathrm{c}},P_{\mathrm{d}}\le 1\,\mathrm{kW}\]</div>
+        <p>\(0.20\le s\le 0.90\) و \(0\le P_{\mathrm{c}},P_{\mathrm{d}}\le 1\,\mathrm{kW}\)</p>
       </div>
       <div class="card alt">
-        <h3>قید انحصار</h3>
-        <div class="eq">\[P_{\mathrm{c}}P_{\mathrm{d}}=0\]</div>
+        <h3>قید انحصار: \(P_{\mathrm{c}}P_{\mathrm{d}}=0\)</h3>
         <p>در یک ساعت هم شارژ و هم دشارژ مجاز نیست.</p>
       </div>
     </div>
@@ -241,10 +243,10 @@
   <section class="slide">
     <p class="kicker">مثال عددی</p>
     <h2>یک ساعت مشخص، تا لایه «حساب» دیده شود</h2>
-    <p>\(s=0.50\)، \(u=+0.40\,\mathrm{kW}\)، \(P_{\mathrm{L}}=0.80\)، \(P_{\mathrm{PV}}=0.30\)</p>
-    <div class="eq" style="font-size:1.02rem">\[\bar P_{\mathrm{c}}=\min\bigl(1,\tfrac{(0.90-0.50)\times 2}{0.95}\bigr)=0.842,\quad P_{\mathrm{c}}=\min(0.40,0.842)=0.40,\quad P_{\mathrm{d}}=0\]</div>
-    <div class="eq" style="font-size:1.02rem">\[s_{+}=0.50+\tfrac{0.95\times 0.40}{2}=0.69,\qquad P_{\mathrm{G}}=0.80+0.40-0.30=0.90\]</div>
-    <p>توازن: \(0.90+0.30+0=0.80+0.40\). انحصار برقرار است چون \(u>0\).</p>
+    <p>\(s=0.50\)، فرمان \(u=+0.40\)، بار \(0.80\)، فتوولتائیک \(0.30\)</p>
+    <p class="muted">سقف شارژ باقی‌مانده: \((0.90-0.50)\times 2 / 0.95 = 0.842\). پس \(P_{\mathrm{c}}=0.40\) و \(P_{\mathrm{d}}=0\).</p>
+    <div class="eq">\[s_{+}=0.50+0.95\times 0.40/2=0.69,\qquad P_{\mathrm{G}}=0.90\]</div>
+    <p>توازن برقرار است: \(0.90+0.30+0=0.80+0.40\). انحصار هم برقرار است چون فرمان مثبت است.</p>
     <div class="notes">لایه یاد نمی‌گیرد؛ حساب می‌کند.</div>
   </section>
 
@@ -326,7 +328,7 @@
   <section class="slide">
     <p class="kicker">بردار ورودی</p>
     <h2>دوازده ویژگی</h2>
-    <div class="eq" style="font-size:1.02rem">\[\mathbf x(t)=\bigl(\sin(2\pi h/24),\cos(2\pi h/24),d,P_{\mathrm{L}},P_{\mathrm{PV}},c_{\mathrm{b}},c_{\mathrm{s}},s,P_{\mathrm{L}}^{t+1},P_{\mathrm{PV}}^{t+1},P_{\mathrm{L}}^{t+3},P_{\mathrm{PV}}^{t+3}\bigr)\]</div>
+    <div class="eq">\[\mathbf x(t)=(\sin(2\pi h/24),\,\cos(2\pi h/24),\,d,\,P_{\mathrm{L}},\,P_{\mathrm{PV}},\,c_{\mathrm{b}},\,c_{\mathrm{s}},\,s,\,P_{\mathrm{L}}^{t+1},\,P_{\mathrm{PV}}^{t+1},\,P_{\mathrm{L}}^{t+3},\,P_{\mathrm{PV}}^{t+3})\]</div>
     <p>\(h\) ساعت روز است و \(d\) نشانگر روز کاری، نه شماره روز هفته.</p>
     <p>مقادیر \(t+1\) و \(t+3\) همان مقدار واقعی سری‌اند. این فرض میدان نیست؛ برای مقایسه آفلاین با مرجعی است که خودش افق کامل را می‌بیند.</p>
     <div class="notes">نشت مرزی انتهای افراز را خودتان بگویید: چند نمونه پایانی می‌تواند ساعت بعد را ببیند، ولی برچسب آزمون در آموزش نیست.</div>
