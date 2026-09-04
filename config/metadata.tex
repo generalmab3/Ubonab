@@ -1,7 +1,7 @@
-% =========================================================
-% اطلاعات پروژه: برای پروژه خود فقط این فایل را ویرایش کنید.
-% =========================================================
+% نقش: تنها فایل مشخصات پروژه. برای پروژهٔ جدید فقط متن داخل آکولادها را عوض کنید.
+% نام فرمان‌ها و آکولادها را حذف نکنید.
 
+% --- نهاد آموزشی ---
 \newcommand{\UniversityNameFa}{دانشگاه بناب}
 \newcommand{\MinistryNameFa}{وزارت علوم، تحقیقات و فناوری}
 \newcommand{\FacultyNameFa}{دانشکده علوم پایه}
@@ -10,31 +10,44 @@
 \newcommand{\FieldNameFa}{علوم کامپیوتر}
 \newcommand{\OrientationFa}{عمومی}
 
-\newcommand{\ProjectTitleFa}{کاربرد شبکه‌های عصبی فیزیک‌آگاه در ریزشبکه‌ها}
+% --- عنوان و افراد (فارسی) ---
+\newcommand{\ProjectTitleFa}{یادگیری فیزیک‌آگاه با قیود سخت برای مدیریت انرژی ریزشبکه متصل به شبکه}
 \newcommand{\StudentNameFa}{محمد امیر بابازاد}
 \newcommand{\StudentNumber}{1402135104}
 \newcommand{\SupervisorNameFa}{دکتر بابک آذرنوید}
-\newcommand{\AdvisorNameFa}{} % در صورت نداشتن استاد مشاور، خالی بماند.
+\newcommand{\AdvisorNameFa}{} % خالی = بدون استاد مشاور
 \newcommand{\AcademicYearFa}{۱۴۰۵ تا ۱۴۰۶}
 \newcommand{\DefenseDateFa}{شهریور ۱۴۰۵}
 
+% برچسب‌های صفحهٔ عنوان؛ با یک استاد راهنما بنویسید: استاد راهنما / Supervisor
+\newcommand{\SupervisorLabelFa}{استاد راهنما}
+\newcommand{\AdvisorLabelFa}{استاد مشاور}
+\newcommand{\AuthorLabelFa}{نگارش}
+\newcommand{\StudentIdLabelFa}{شماره دانشجویی}
+\newcommand{\AcademicYearLabelFa}{سال تحصیلی}
+
+% --- عنوان و افراد (انگلیسی) ---
 \newcommand{\UniversityNameEn}{University of Bonab}
 \newcommand{\FacultyNameEn}{Faculty of Basic Sciences}
 \newcommand{\DepartmentNameEn}{Department of Mathematics and Computer Science}
 \newcommand{\DegreeNameEn}{Bachelor of Science}
 \newcommand{\FieldNameEn}{Computer Science}
-\newcommand{\ProjectTitleEn}{Applications of Physics-Informed Neural Networks in Microgrids}
+\newcommand{\ProjectTitleEn}{Hard-Constraint Physics-Informed Learning for Energy Management of a Grid-Connected Microgrid}
 \newcommand{\StudentNameEn}{Muhammad Amir Babazad}
 \newcommand{\SupervisorNameEn}{Dr. Babak Azarnavid}
 \newcommand{\AdvisorNameEn}{}
 \newcommand{\DefenseDateEn}{September 2026}
+\newcommand{\SupervisorLabelEn}{Supervisor}
+\newcommand{\AdvisorLabelEn}{Advisor}
+\newcommand{\AuthorLabelEn}{By}
+\newcommand{\StudentIdLabelEn}{Student ID}
 
-% کلیدواژه‌ها
-\newcommand{\KeywordsFa}{شبکه عصبی فیزیک‌آگاه، ریزشبکه، مدیریت انرژی، یادگیری عمیق، پای‌تورچ}
-\newcommand{\KeywordsEn}{Physics-informed neural network, microgrid, energy management, deep learning, PyTorch}
+% کلیدواژه‌ها: ۵ تا ۱۰ مورد، هم‌معنا در دو زبان
+\newcommand{\KeywordsFa}{یادگیری فیزیک‌آگاه، قید سخت، ریزشبکه متصل به شبکه، مدیریت انرژی، باتری}
+\newcommand{\KeywordsEn}{Physics-informed learning, hard constraints, grid-connected microgrid, energy management, battery}
 
-% فعال یا غیرفعال کردن بخش‌های اختیاری
-% برای حذف هر بخش، true را به false تغییر دهید.
+% بخش‌های اختیاری: true را به false تبدیل کنید تا آن بخش از PDF حذف شود.
+% اگر فهرستی هیچ مدخلی ندارد، کلید آن را false کنید تا صفحهٔ خالی نسازد.
 \newif\ifIncludeDedication
 \IncludeDedicationtrue
 \newif\ifIncludeAcknowledgements
@@ -48,6 +61,6 @@
 \newif\ifIncludeListOfListings
 \IncludeListOfListingstrue
 \newif\ifIncludeAppendix
-\IncludeAppendixfalse
+\IncludeAppendixtrue
 \newif\ifIncludeEnglishPages
 \IncludeEnglishPagestrue

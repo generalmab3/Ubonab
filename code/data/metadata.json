@@ -1,0 +1,54 @@
+{
+  "description": "مطالعه موردی پروژه کارشناسی، مقیاس خانه",
+  "n_hours": 3289,
+  "start_local": "2016-01-11 17:00",
+  "end_local": "2016-05-27 17:00",
+  "timezone": "Europe/Brussels",
+  "load": {
+    "source": "Documented residential shape on the Candanedo 2017 calendar; UCI host was unreachable",
+    "doi": "10.24432/C5VC8G",
+    "background_kW": 0.2
+  },
+  "pv": {
+    "source": "Solar-altitude PV envelope at Stambruges; NASA host was unreachable",
+    "location": {
+      "latitude": 50.5083,
+      "longitude": 3.7147,
+      "site": "Stambruges, Belgium"
+    },
+    "nominal_kW": 1.0,
+    "performance_ratio": 0.82
+  },
+  "tariff": {
+    "weekday_offpeak": 0.16,
+    "weekday_normal": 0.22,
+    "weekday_peak": 0.34,
+    "weekend": 0.2,
+    "sell": 0.06,
+    "peak_hours_local": [
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "offpeak_hours_local": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      22,
+      23
+    ],
+    "note": "تعرفه فرضی است، قبض واقعی نیست"
+  },
+  "battery": {
+    "E_max_kWh": 2.0,
+    "P_max_kW": 1.0,
+    "eta_c": 0.95,
+    "eta_d": 0.95
+  }
+}

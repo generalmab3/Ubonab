@@ -1,0 +1,28 @@
+# خروجی و فایل‌های کمکی LaTeX
+/*.pdf
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lol
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+*-blx.bib
+
+# استثنا: لوگوی دانشگاه
+!assets/*.pdf
+
+# پایتون
+.venv/
+__pycache__/
+*.pyc
+code/data/energydata_complete.zip
+code/data/nasa_power_daily.json

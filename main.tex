@@ -2,25 +2,29 @@
 % !BIB program = biber
 % !TeX TXS-program:compile = txs:///xelatex
 % !TeX TXS-program:bibliography = txs:///biber
-% برای خروجی کامل از build.bat / build.sh یا latexmk -xelatex main.tex استفاده کنید.
-% قالب پروژه کارشناسی دانشگاه بناب
+%
+% نقطهٔ ورود قالب پروژه کارشناسی دانشگاه بناب
+% ترتیب صفحات را از اینجا تغییر دهید؛ مشخصات را در config/metadata.tex بنویسید.
+% خروجی کامل: ./build.sh   یا   latexmk -xelatex main.tex
+
 \documentclass[12pt,a4paper,oneside,fleqn]{report}
 
 \input{config/packages}
 \input{config/metadata}
 \input{config/fonts}
 \input{config/style}
+\input{config/commands}
 
 \begin{document}
 \ApplyBonabNumbering
 
-% دو صفحه نخست شماره نمایان و لنگر PDF ندارند.
+% دو صفحهٔ نخست بدون شماره و بدون لنگر PDF
 \hypersetup{pageanchor=false}
 \pagenumbering{gobble}
 \include{frontmatter/besmellah}
 \include{frontmatter/title-fa}
 
-% صفحات مقدماتی با شماره‌گذاری حرفی فارسی
+% صفحات مقدماتی با حروف فارسی
 \preliminarynumbering
 \ifIncludeDedication
   \include{frontmatter/dedication}
@@ -59,7 +63,7 @@
   \lstlistoflistings
 \fi
 
-% متن اصلی از صفحه ۱ آغاز می‌شود.
+% متن اصلی از صفحه ۱
 \mainnumbering
 \include{chapters/chapter1}
 \include{chapters/chapter2}
@@ -67,24 +71,22 @@
 \include{chapters/chapter4}
 \include{chapters/chapter5}
 
-% پیوست اختیاری
 \ifIncludeAppendix
   \appendix
-  \include{appendices/latex-examples}
+  \include{appendices/reproducibility}
+  \include{appendices/hard-layer}
 \fi
 
-% منابع
 \cleardoublepage
 \phantomsection
 \chapter*{منابع}
 \addcontentsline{toc}{chapter}{منابع}
 \begin{latin}
 \sloppy
-\hbadness=2500 % عنوان‌های طولانی منابع IEEE هشدار کم‌اهمیت ایجاد نکنند.
+\hbadness=2500
 \printbibliography[heading=none]
 \end{latin}
 
-% صفحات انگلیسی پایانی، مطابق ترتیب دستورالعمل دانشگاه
 \ifIncludeEnglishPages
   \cleardoublepage
   \hypersetup{pageanchor=false}

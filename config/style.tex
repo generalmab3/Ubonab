@@ -1,15 +1,16 @@
-% اندازه و فاصله متن اصلی مطابق دستورالعمل دانشگاه
+% نقش: صفحه‌آرایی، عنوان‌ها، فهرست‌ها، قضیه‌ها، کد و نمودار.
+% محتوای علمی پروژه را اینجا ننویسید.
+
+% متن ۱۴ پوینت با فاصلهٔ خط ۱٫۵ (پایه ۲۱ پوینت) مطابق دستورالعمل دانشگاه
 \AtBeginDocument{\fontsize{14pt}{21pt}\selectfont}
 \setlength{\parindent}{1.25cm}
 \setlength{\parskip}{0pt}
 \setlength{\emergencystretch}{2em}
 \raggedbottom
 
-% شماره صفحه در وسط پایین صفحه؛ سبک plain استاندارد دقیقاً همین چینش را دارد.
-% استفاده نکردن از fancyhdr، سازگاری بهتری با bidi و xepersian ایجاد می‌کند.
+% شماره صفحه وسط پایین؛ fancyhdr با bidi تداخل می‌سازد.
 \pagestyle{plain}
 
-% قالب عنوان فصل و بخش‌ها
 \titleformat{\chapter}[display]
   {\centering\TitleFont\bfseries\fontsize{16pt}{24pt}\selectfont}
   {فصل \thechapter}
@@ -42,28 +43,12 @@
   {0.75em}
   {}
 
-% جداکننده شماره فصل، بخش، شکل، جدول و رابطه مطابق دستورالعمل دانشگاه.
+% جداکنندهٔ شمارهٔ فصل‌محور مطابق دستورالعمل دانشگاه
 \SepMark{-}
 
-% bidi ترتیب اجزای شماره را در متن راست‌به‌چپ معکوس می‌کند. برای آنکه خروجی
-% چاپی به شکل «شماره فصل-شماره بخش» دیده شود، ترتیب داخلی شمارنده‌ها برعکس
-% تعریف می‌شود. این فرمان باید پس از \begin{document} اجرا شود.
-\makeatletter
-\newcommand{\ApplyBonabNumbering}{%
-  \renewcommand{\thesection}{\arabic{section}\@SepMark\thechapter}%
-  \renewcommand{\thesubsection}{\arabic{subsection}\@SepMark\arabic{section}\@SepMark\thechapter}%
-  \renewcommand{\thesubsubsection}{\arabic{subsubsection}\@SepMark\arabic{subsection}\@SepMark\arabic{section}\@SepMark\thechapter}%
-  \renewcommand{\thefigure}{\arabic{figure}\@SepMark\thechapter}%
-  \renewcommand{\thetable}{\arabic{table}\@SepMark\thechapter}%
-  \renewcommand{\theequation}{\arabic{equation}\@SepMark\thechapter}%
-  \renewcommand{\thedefinition}{\arabic{definition}\@SepMark\thechapter}%
-}
-\makeatother
-
-% فرمول‌ها از حاشیه چپ آغاز می‌شوند و شماره رابطه در سمت راست قرار می‌گیرد.
+% رابطه از چپ و شماره از راست (کلاس fleqn)
 \setlength{\mathindent}{0pt}
 
-% عنوان شکل‌ها و جدول‌ها با اندازه ۱۰ پوینت مطابق دستورالعمل دانشگاه
 \DeclareCaptionFont{bonabcaption}{\fontsize{10pt}{15pt}\selectfont}
 \captionsetup{
   font={bonabcaption,stretch=1.15},
@@ -75,12 +60,10 @@
 \captionsetup[table]{position=top,skip=7pt}
 \captionsetup[figure]{position=bottom,skip=7pt}
 
-% فهرست‌ها
-% از گلوله ریاضی استفاده می‌شود تا نبود نویسه bullet در B Mitra مربع نسازد.
+% گلوله از قلم ریاضی؛ B Mitra نویسهٔ bullet ندارد.
 \setlist[itemize]{label={\ensuremath{\bullet}},topsep=4pt,itemsep=2pt,parsep=0pt}
 \setlist[enumerate]{topsep=4pt,itemsep=2pt,parsep=0pt}
 
-% محیط‌های علمی
 \theoremstyle{definition}
 \newtheorem{definition}{تعریف}[chapter]
 \newtheorem{example}[definition]{مثال}
@@ -92,16 +75,13 @@
 \newtheorem{remark}[definition]{ملاحظه}
 \renewcommand{\proofname}{برهان}
 
-% نمایش کد برنامه‌نویسی
 \definecolor{codebg}{RGB}{247,248,250}
 \definecolor{codecomment}{RGB}{45,125,70}
 \definecolor{codekeyword}{RGB}{25,65,150}
 \definecolor{codestring}{RGB}{160,65,45}
-% محیط listing چپ‌به‌راست است؛ قلم فارسی باید در خود نام «کد» اعمال شود.
 \renewcommand{\lstlistingname}{{\HeadingFont کد}}
 \renewcommand{\lstlistlistingname}{فهرست کدها}
-\lstdefinestyle{pythonstyle}{
-  language=Python,
+\lstdefinestyle{bonabcode}{
   basicstyle=\ttfamily\footnotesize,
   keywordstyle=\color{codekeyword}\bfseries,
   commentstyle=\color{codecomment},
@@ -119,43 +99,12 @@
   xleftmargin=1.5em,
   framexleftmargin=1.2em
 }
-\lstset{style=pythonstyle}
+\lstdefinestyle{bonabpython}{style=bonabcode,language=Python}
+\lstset{style=bonabpython}
 
-% سبک‌های نمودار TikZ
+% سبک‌های کمکی نمودار؛ در فصل‌ها با نام tikzstyle استفاده شوند.
 \tikzset{
   block/.style={draw,rounded corners,minimum width=3.2cm,minimum height=1.05cm,align=center,fill=blue!5},
   loss/.style={draw,rounded corners,minimum width=3.2cm,minimum height=1.05cm,align=center,fill=orange!10},
   flow/.style={-{Latex[length=2.5mm]},thick}
-}
-
-% دستورهای کمکی
-% ارجاع عددی در متن فارسی با قلم لاتین حروف‌چینی می‌شود تا فونت‌هایی مانند
-% B Mitra که پوشش کامل ASCII ندارند، براکت یا کلید منبع را مربع نکنند.
-\newcommand{\pcite}[1]{\lr{\cite{#1}}}
-
-\newcommand{\unnumberedchapter}[1]{%
-  \chapter*{#1}%
-  \phantomsection%
-  \addcontentsline{toc}{chapter}{#1}%
-}
-\newcommand{\preliminarynumbering}{%
-  \cleardoublepage
-  \pagenumbering{harfi}% شیوه حرفی فارسی در xepersian
-  \hypersetup{pageanchor=true}% جلوگیری از مقصدهای تکراری در PDF
-  \pagestyle{plain}
-}
-\newcommand{\mainnumbering}{%
-  \hypersetup{pageanchor=false}% هنگام بازنشانی شماره صفحه، لنگر موقتاً غیرفعال است.
-  \cleardoublepage
-  \pagenumbering{arabic}
-  \hypersetup{pageanchor=true}
-  \pagestyle{plain}
-}
-
-% مشخصات PDF
-\hypersetup{
-  pdftitle={\ProjectTitleEn},
-  pdfauthor={\StudentNameEn},
-  pdfsubject={B.Sc. Project in Computer Science},
-  pdfkeywords={physics-informed neural networks, microgrid, energy management}
 }

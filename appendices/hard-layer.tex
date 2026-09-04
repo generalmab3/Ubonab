@@ -1,0 +1,23 @@
+\chapter{شبه کد لایه خروجی تحلیلی}
+\label{app:hard-layer}
+
+الگوریتم زیر همان ترتیب محاسبات روابط~\eqref{eq:signed-command} تا~\eqref{eq:hard-soc} را، مستقل از زبان برنامه‌نویسی، نشان می‌دهد. عملگر کمینه در سقف‌ها و تفکیک علامت فرمان، امکان‌پذیری محلی باتری را پیش از محاسبه توان شبکه اعمال می‌کند.
+
+\begin{lstlisting}[style=bonabcode,caption={شبه‌کد لایه خروجی با قید سخت},label={lst:hard-layer}]
+INPUT: current SOC s, unconstrained network output z,
+       load P_L, PV power P_PV, and model parameters
+
+u <- P_max * tanh(z)
+charge_cap <- max(0, min(P_max, (s_max - s) * E_max / (eta_c * Delta_t)))
+discharge_cap <- max(0, min(P_max, (s - s_min) * E_max * eta_d / Delta_t))
+
+P_c <- min(max(u, 0), charge_cap)
+P_d <- min(max(-u, 0), discharge_cap)
+
+s_next <- s
+         + eta_c * P_c * Delta_t / E_max
+         - P_d * Delta_t / (eta_d * E_max)
+P_G <- P_L + P_c - P_PV - P_d
+
+RETURN P_c, P_d, s_next, P_G
+\end{lstlisting}

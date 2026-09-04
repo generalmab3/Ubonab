@@ -1,0 +1,54 @@
+\chapter{مشخصات بازتولیدپذیری}
+\label{app:reproducibility}
+
+این پیوست مقادیر آزمایش همین گزارش را یک‌جا گرد می‌آورد. اسکریپت‌های شاخه~\lr{code} سری ساعتی را می‌سازند، لایه فیزیکی را می‌آزمایند، پنج بذر را آموزش می‌دهند و شکل‌ها را می‌نویسند. تقویم از مجموعه عمومی مصرف وسایل است \pcite{candanedo2017energy,candanedo2017uci} و تابش در صورت دسترسی از خدمت داده‌های انرژی ناسا \pcite{nasa2016power}؛ اگر آن میزبان‌ها در دسترس نباشند، همان تقویم و محل با مدل مستند در \lr{code/prepare\_public\_data.py} تولید می‌شود. مقیاس مطالعه یک خانه است. ترتیب لایه خروجی در پیوست~\ref{app:hard-layer} آمده است. نسخه پایدار گزارش در نشانی
+\begin{latin}
+\noindent\url{https://github.com/generalmab3/Ubonab}
+\end{latin}
+در دسترس است.
+
+\begin{table}[H]
+  \centering
+  \caption{پارامترهای کامل شبیه‌سازی و آموزش}
+  \label{tab:repro-params}
+  \begin{tabular}{p{0.28\textwidth}p{0.38\textwidth}p{0.24\textwidth}}
+    \toprule
+    \textbf{پارامتر} & \textbf{مقدار} & \textbf{منبع در کد یا داده} \\
+    \midrule
+    $\eta_{\mathrm{c}},\,\eta_{\mathrm{d}}$ & $0{.}95$, $0{.}95$ & \lr{params.py} \\
+    $E_{\max}$ & $2{.}0\,\mathrm{kWh}$ & \lr{params.py} \\
+    $P_{\max}$ & $1{.}0\,\mathrm{kW}$ & \lr{params.py} \\
+    $s_{\min},\,s_{\max},\,s_{0}$ & $0{.}20$, $0{.}90$, $0{.}50$ & \lr{params.py} \\
+    $\kappa$ & $0{.}008$ واحد پولی بر کیلووات‌ساعت عبوری & \lr{params.py} \\
+    $\Delta t$ & $1\,\mathrm{h}$ & \lr{params.py} \\
+    تعرفه خرید $c_{\mathrm{b}}$ & کم‌باری $0{.}16$؛ عادی $0{.}22$؛ اوج $0{.}34$؛ تخفیف آخر هفته $0{.}20$ & \lr{metadata.json} \\
+    تعرفه فروش $c_{\mathrm{s}}$ & $0{.}06$ & \lr{metadata.json} \\
+    شبکه وضعیت شارژ در برنامه‌ریزی پویا & $0{.}20$ تا $0{.}90$ با گام $0{.}01$ ($71$ نقطه) & \lr{SOC\_GRID\_STEP} \\
+    شبکه فرمان در برنامه‌ریزی پویا & $41$ مقدار یکنواخت روی $[-1,1]\,\mathrm{kW}$ & \lr{N\_ACTIONS} \\
+    شرط نهایی برنامه‌ریزی پویا & $V_{T}(s)=0$ & \lr{dynamic\_programming.py} \\
+    معماری هر شبکه & دو لایه پنهان $32$ واحدی با تانژانت هیپربولیک & کلاس \lr{MLP} \\
+    اندازه دسته & $64$ & \lr{BATCH} \\
+    بیشینه دوره آموزش & $450$ دور کامل روی مجموعه آموزش & \lr{EPOCHS} \\
+    شکیبایی توقف زودهنگام & $55$ دوره بدون بهبود اعتبارسنجی & \lr{PATIENCE} \\
+    بهینه‌ساز و نرخ یادگیری & آدام \pcite{kingma2015adam}؛ $1{.}2\times 10^{-3}$ & \lr{LR} \\
+    بذرهای پایه & $7,11,19,23,29$؛ فیزیک‌تعبیه‌شده $+17$؛ حذفی $+31$ & \lr{SEEDS} \\
+    افراز داده & زمانی $60$، $20$ و $20$ درصد؛ $1973$، $657$ و $659$ ساعت & \lr{simulate.py} \\
+    $\mathrm{MSE}_{\mathrm{comp}}$ داده‌محور خام & $0{.}0133\pm 0{.}0008$ & \lr{metrics.json} \\
+    $\mathrm{MSE}_{\mathrm{comp}}$ فیزیک‌تعبیه‌شده & $0{.}0145\pm 0{.}0016$ & \lr{metrics.json} \\
+    آزمایش حذفی & همان بذرها بدون چهار ورودی $t+1$ و $t+3$ & \lr{use\_look=False} \\
+    سیاست حریصانه & کمینه‌سازی هزینه جاری روی شبکه $41$ فرمان & \lr{greedy\_rollout} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+فرمان‌های بازتولید از این قرارند
+\begin{latin}
+\begin{verbatim}
+python3 -m venv .venv
+.venv/bin/pip install -r code/requirements.txt
+.venv/bin/python code/prepare_public_data.py
+.venv/bin/python code/test_physics.py
+.venv/bin/python code/simulate.py
+.venv/bin/python code/benchmark_runtime.py
+\end{verbatim}
+\end{latin}

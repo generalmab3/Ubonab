@@ -1,4 +1,6 @@
-% بسته‌های پایه و صفحه‌آرایی
+% نقش: بارگذاری بسته‌ها. ترتیب مهم است؛ زی‌پرشین باید آخرین بسته باشد.
+% ویرایش: فقط وقتی بستهٔ جدیدی برای کل قالب لازم است.
+
 \usepackage{iftex}
 \ifXeTeX\else
   \PackageError{BonabTemplate}{This template must be compiled with XeLaTeX}{Select XeLaTeX as the compiler.}
@@ -14,7 +16,7 @@
 ]{geometry}
 
 \usepackage{graphicx}
-\graphicspath{{assets/}{figures/}}
+\graphicspath{{assets/}}
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{array}
@@ -24,7 +26,6 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
-\usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{etoolbox}
 \usepackage{xcolor}
@@ -34,7 +35,6 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
 
-% مدیریت منابع به سبک IEEE
 \usepackage{csquotes}
 \usepackage[
   backend=biber,
@@ -48,7 +48,6 @@
 ]{biblatex}
 \addbibresource{references.bib}
 
-% پیوندهای PDF؛ برای چاپ، پیوندها بدون رنگ و کادر هستند.
 \usepackage[
   unicode=true,
   hidelinks,
@@ -56,5 +55,5 @@
 ]{hyperref}
 \usepackage{bookmark}
 
-% زی‌پرشین باید پس از بیشتر بسته‌ها فراخوانی شود.
+% زی‌پرشین پس از همهٔ بسته‌های بالا فراخوانی می‌شود.
 \usepackage{xepersian}
