@@ -11,3 +11,9 @@ python3 -m http.server 8787 --bind 0.0.0.0
 فاصله: اسلاید بعد · `N` یادداشت گوینده · `F` تمام‌صفحه.
 
 اعداد با `code/data/metrics.json` یکی‌اند. قلم فارسی Vazirmatn است و رقم‌ها فارسی نمایش داده می‌شوند.
+
+PDF ارائه: [`defense.pdf`](defense.pdf)
+
+```bash
+.venv/bin/python slides/make_pdf.py
+```
