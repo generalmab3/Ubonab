@@ -10,4 +10,4 @@ python3 -m http.server 8787 --bind 0.0.0.0
 
 فاصله: اسلاید بعد · `N` یادداشت گوینده · `F` تمام‌صفحه.
 
-اعداد با `code/data/metrics.json` یکی‌اند. استاد راهنما فقط دکتر بابک آذرنوید است.
+اعداد با `code/data/metrics.json` یکی‌اند. قلم متن Amiri و عنوان Noto Naskh Arabic است (جایگزین وب برای B Mitra و B Nazanin مقاله).
