@@ -75,6 +75,7 @@ ul.clean { margin: .1rem 0 0; padding-right: 1.1rem; }
 ul.clean li { margin: .08rem 0; }
 .eq {
   direction: ltr;
+  unicode-bidi: isolate;
   text-align: center;
   background: #fff;
   border: 1px solid var(--line);
@@ -169,8 +170,21 @@ body.show-notes .slide { overflow: auto; }
 }
 body.help-on .help { display: block; }
 .big { font-size: 1.85rem; font-weight: 800; color: var(--navy); }
-.katex, .katex-display { font-size: 1.05em; }
-.katex { font-family: Vazirmatn, KaTeX_Main, serif; }
+.katex {
+  direction: ltr !important;
+  unicode-bidi: isolate;
+  display: inline-block;
+  text-align: left;
+  font-family: KaTeX_Main, KaTeX_Math, "Times New Roman", serif;
+}
+.katex-display {
+  display: block;
+  direction: ltr !important;
+  unicode-bidi: isolate;
+  text-align: center;
+  margin: .15em 0;
+}
+.eq .katex-display { margin: .1em 0; }
 @media print {
   html, body { height: auto; overflow: visible; background: #fff; }
   #deck { width: auto; height: auto; box-shadow: none; overflow: visible; }

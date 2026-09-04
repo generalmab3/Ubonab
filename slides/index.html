@@ -224,7 +224,7 @@
   <section class="slide">
     <p class="kicker">فصل ۳ · مدل پیشنهادی</p>
     <h2>شبکه یک عدد می‌دهد؛ فیزیک بقیه را می‌سازد</h2>
-    <div class="eq">\[u(t)=P_{\max}\tanh\bigl(z(t)\bigr)\]</div>
+    <div class="eq">\[u(t)=P_{\max}\,\tanh(z(t))\]</div>
     <p>\(z\) خروجی آزاد شبکه است. علامت \(u\) جهت است: مثبت شارژ، منفی دشارژ. قدر مطلق شدت توان است.</p>
     <p class="muted">بازه تانژانت هیپربولیک در \(\pm 1\) باز است؛ فرمان دقیقاً به \(\pm P_{\max}\) نمی‌رسد و فقط نزدیک می‌شود.</p>
     <div class="notes">tanh را اگر خواستند روی تخته اسکیس کنید.</div>
@@ -233,9 +233,9 @@
   <section class="slide">
     <p class="kicker">لایه سخت</p>
     <h2>سقف وابسته به وضعیت شارژ، سپس انحصار</h2>
-    <div class="eq">\[\bar P_{\mathrm{c}}(s)=\max\Bigl(0,\min\bigl(P_{\max},\tfrac{(s_{\max}-s)E_{\max}}{\eta_{\mathrm{c}}\Delta t}\bigr)\Bigr)\]</div>
-    <div class="eq">\[\bar P_{\mathrm{d}}(s)=\max\Bigl(0,\min\bigl(P_{\max},\tfrac{(s-s_{\min})E_{\max}\eta_{\mathrm{d}}}{\Delta t}\bigr)\Bigr)\]</div>
-    <div class="eq">\[P_{\mathrm{c}}=\min([u]_{+},\bar P_{\mathrm{c}}),\qquad P_{\mathrm{d}}=\min([-u]_{+},\bar P_{\mathrm{d}})\]</div>
+    <div class="eq">\[\bar{P}_{\mathrm{c}}(s)=\max\left(0,\min\left(P_{\max},\frac{(s_{\max}-s)E_{\max}}{\eta_{\mathrm{c}}\Delta t}\right)\right)\]</div>
+    <div class="eq">\[\bar{P}_{\mathrm{d}}(s)=\max\left(0,\min\left(P_{\max},\frac{(s-s_{\min})E_{\max}\eta_{\mathrm{d}}}{\Delta t}\right)\right)\]</div>
+    <div class="eq">\[P_{\mathrm{c}}=\min([u]_{+},\bar{P}_{\mathrm{c}}),\qquad P_{\mathrm{d}}=\min([-u]_{+},\bar{P}_{\mathrm{d}})\]</div>
     <p>چون یکی از \([u]_{+}\) و \([-u]_{+}\) صفر است، هم‌زمانی رخ نمی‌دهد. وزن آموزش‌پذیر در این لایه نیست.</p>
     <div class="notes">اول ظرفیت جعبه SOC، بعد بریدن فرمان.</div>
   </section>
@@ -254,7 +254,7 @@
     <p class="kicker">مثال حدی</p>
     <h2>باتری خالی دشارژ نمی‌شود</h2>
     <p>اگر \(s=s_{\min}=0.20\) و فرمان کامل دشارژ \(u=-1\):</p>
-    <div class="eq">\[\bar P_{\mathrm{d}}=\min\bigl(1,\tfrac{(0.20-0.20)\times 2\times 0.95}{1}\bigr)=0 \Rightarrow P_{\mathrm{d}}=0\]</div>
+    <div class="eq">\[\bar{P}_{\mathrm{d}}=\min\left(1,\frac{(0.20-0.20)\times 2\times 0.95}{1}\right)=0 \Rightarrow P_{\mathrm{d}}=0\]</div>
     <p>همین برای \(s=0.90\) و \(u=+1\): سقف شارژ صفر است. تست حدی در کد همین دو حالت را بررسی می‌کند.</p>
     <div class="notes">اگر اثبات نرم‌افزاری خواستند: test_physics.py.</div>
   </section>
@@ -271,7 +271,7 @@
   <section class="slide">
     <p class="kicker">زیان آموزش</p>
     <h2>فقط فرمان مرجع کمینه می‌شود</h2>
-    <div class="eq">\[\mathcal L_u=\frac1N\sum_{i=1}^N\left(\tanh(z_i)-\frac{u_i^\star}{P_{\max}}\right)^2\]</div>
+    <div class="eq">\[\mathcal{L}_{u}=\frac{1}{N}\sum_{i=1}^{N}\left(\tanh(z_{i})-\frac{u_{i}^{\star}}{P_{\max}}\right)^{2}\]</div>
     <p>\(u^\star\) فرمان برنامه‌ریزی پویاست. چهار خروجی فیزیکی بعد از لایه ساخته می‌شوند و در این زیان نیستند.</p>
     <p class="muted">مدل آزاد میانگین مربع خطای چهار مؤلفه استانداردشده را کمینه می‌کند.</p>
     <div class="notes">تفاوت زیان را صریح بگویید.</div>
@@ -280,7 +280,7 @@
   <section class="slide">
     <p class="kicker">ترمیم مدل آزاد</p>
     <h2>پس‌پردازش فقط برای هزینه</h2>
-    <div class="eq">\[u_{\mathrm{safe}}=\mathrm{clip}(\hat P_{\mathrm{c}}-\hat P_{\mathrm{d}},-P_{\max},P_{\max})\]</div>
+    <div class="eq">\[u_{\mathrm{safe}}=\operatorname{clip}(\hat{P}_{\mathrm{c}}-\hat{P}_{\mathrm{d}},-P_{\max},P_{\max})\]</div>
     <p>سپس همان لایه سخت. وضعیت شارژ مسیر ترمیم از دینامیک باتری می‌آید، نه از خروجی چهارم شبکه.</p>
     <p>نقض‌های جدول امکان‌پذیری روی خروجی <strong>خام</strong> است. هزینه روی مسیر ترمیم‌شده است تا فرمان ناممکن ارزان به نظر نرسد.</p>
     <div class="notes">تفاوت معماری: در مدل پیشنهادی لایه داخل مدل است و گرادیان از فضای مجاز می‌گذرد.</div>
@@ -304,7 +304,7 @@
   <section class="slide">
     <p class="kicker">مرجع برنامه‌ریزی پویا</p>
     <h2>افق کامل، روی شبکه گسسته</h2>
-    <div class="eq">\[V_t(s)=\min_{u\in\mathcal U(s)}\bigl\{g_t(s,u)+V_{t+1}\bigl(f(s,u)\bigr)\bigr\}\]</div>
+    <div class="eq">\[V_{t}(s)=\min_{u\in\mathcal{U}(s)}\left\{g_{t}(s,u)+V_{t+1}\bigl(f(s,u)\bigr)\right\}\]</div>
     <ul class="clean">
       <li>حالت: وضعیت شارژ با گام \(0.01\) از \(0.20\) تا \(0.90\) — ۷۱ نقطه</li>
       <li>فرمان: ۴۱ مقدار روی \([-1,1]\) کیلووات</li>

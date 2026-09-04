@@ -25,9 +25,8 @@
     while (w.nextNode()) nodes.push(w.currentNode);
     nodes.forEach(function (n) {
       if (!n.parentElement) return;
-      var tag = n.parentElement.tagName;
-      if (tag === "SCRIPT" || tag === "STYLE") return;
-      if (!n.nodeValue || !/[0-9.]/.test(n.nodeValue)) return;
+      if (n.parentElement.closest(".katex, .katex-mathml, script, style")) return;
+      if (!n.nodeValue || !/[0-9]/.test(n.nodeValue)) return;
       n.nodeValue = toFaDigits(n.nodeValue);
     });
   }
